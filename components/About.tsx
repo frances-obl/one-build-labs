@@ -3,34 +3,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MessageSquare, Zap, Target } from "lucide-react";
 
-const features = [
-  {
-    icon: MessageSquare,
-    title: "Direct Communication",
-    body: "You talk to us, the people actually building your site. No middleman, no miscommunication.",
-  },
-  {
-    icon: Zap,
-    title: "Speed That Matters",
-    body: "Most projects launch within a week. We move fast without cutting corners.",
-  },
-  {
-    icon: Target,
-    title: "Built to Perform",
-    body: "Fast load times, mobile-first, and SEO-ready out of the box. Every single time.",
-  },
-];
-
-const easing = [0.16, 1, 0.3, 1] as [number, number, number, number];
-
-const fadeUp = (delay = 0) => ({
-  hidden: { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.75, ease: easing, delay },
-  },
-});
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export default function About() {
   const ref = useRef(null);
@@ -40,91 +13,282 @@ export default function About() {
     <section
       id="about"
       ref={ref}
-      className="py-20 md:py-24 bg-[#f4f4f7]"
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
+      style={{
+        background: "#f4f4f7",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "clamp(60px, 8vw, 120px) clamp(24px, 6vw, 100px)",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-
-          {/* Left: story */}
-          <motion.div
-            variants={fadeUp(0)}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="space-y-7"
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "1fr 1.2fr",
+          gap: "clamp(48px, 8vw, 120px)",
+          alignItems: "center",
+        }}
+      >
+        {/* ── Left: story ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.75, ease }}
+        >
+          {/* Eyebrow */}
+          <p
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "10px",
+              fontWeight: 700,
+              letterSpacing: "0.28em",
+              color: "#8a8aa8",
+              textTransform: "uppercase",
+              marginBottom: "20px",
+            }}
           >
+            Who We Are
+          </p>
+
+          {/* Heading */}
+          <h2
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(2.6rem, 4.5vw, 3.8rem)",
+              fontWeight: 700,
+              color: "#16162a",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+              marginBottom: "24px",
+            }}
+          >
+            Two builders,{" "}
+            <br />
+            <em
+              style={{
+                fontStyle: "italic",
+                fontWeight: 400,
+                color: "#8a9ac8",
+              }}
+            >
+              one mission.
+            </em>
+          </h2>
+
+          {/* Body */}
+          <p
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "13.5px",
+              color: "#8a8aa8",
+              lineHeight: 1.75,
+              maxWidth: "340px",
+              marginBottom: "40px",
+            }}
+          >
+            We&apos;re not an agency with layers of overhead. We&apos;re two people who genuinely love building websites, and we&apos;re really good at it.
+          </p>
+
+          {/* Signature */}
+          <div>
             <p
-              className="text-[10px] tracking-[0.28em] text-[#8a8aa8] uppercase"
-              style={{ fontFamily: "var(--font-montserrat)" }}
+              style={{
+                fontFamily: "var(--font-dancing)",
+                fontSize: "clamp(28px, 3.5vw, 38px)",
+                color: "#16162a",
+                lineHeight: 1.1,
+                marginBottom: "8px",
+              }}
             >
-              Who We Are
+              Frances &amp; Jose
             </p>
-
-            <h2
-              className="text-[clamp(2.8rem,5vw,4.2rem)] font-bold text-[#16162a] leading-[0.95] tracking-tight"
-              style={{ fontFamily: "var(--font-cormorant)" }}
-            >
-              Two builders,{" "}
-              <span className="italic font-normal">one mission.</span>
-            </h2>
-
             <p
-              className="text-[14px] text-[#8a8aa8] leading-relaxed max-w-sm"
-              style={{ fontFamily: "var(--font-montserrat)" }}
+              style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.24em",
+                color: "#8a8aa8",
+                textTransform: "uppercase",
+              }}
             >
-              We're not an agency with layers of overhead. We're two people who genuinely love building websites and we're really good at it.
+              Co-Founders &amp; Developers
             </p>
+          </div>
+        </motion.div>
 
-            {/* Signature */}
-            <div className="pt-4 border-t border-[#e0e0ea]">
-              <p
-                className="text-3xl text-[#16162a] italic"
-                style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300 }}
+        {/* ── Right: feature list ── */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
+          {/* Row 1: Direct Communication */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease, delay: 0.1 }}
+            style={{ display: "flex", alignItems: "flex-start", gap: "20px" }}
+          >
+            <div
+              style={{
+                flexShrink: 0,
+                width: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                border: "1px solid #d8d8e8",
+                background: "#ededf4",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "4px",
+              }}
+            >
+              <MessageSquare style={{ width: 18, height: 18, color: "#16162a" }} aria-hidden="true" />
+            </div>
+            <div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-cormorant)",
+                  fontSize: "clamp(20px, 2.2vw, 26px)",
+                  fontWeight: 700,
+                  color: "#16162a",
+                  lineHeight: 1.1,
+                  marginBottom: "8px",
+                }}
               >
-                Frances &amp; Jose
-              </p>
+                Direct Communication
+              </h3>
               <p
-                className="text-[9px] tracking-[0.25em] text-[#8a8aa8] uppercase mt-1"
-                style={{ fontFamily: "var(--font-montserrat)" }}
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "13px",
+                  color: "#8a8aa8",
+                  lineHeight: 1.7,
+                }}
               >
-                Co-Founders &amp; Developers
+                You talk to us, the people actually building your site.
+                <br />
+                No middleman, no miscommunication
               </p>
             </div>
           </motion.div>
 
-          {/* Right: feature list */}
-          <div className="space-y-0 divide-y divide-[#e0e0ea]">
-            {features.map((f, i) => {
-              const Icon = f.icon;
-              return (
-                <motion.div
-                  key={f.title}
-                  variants={fadeUp(i * 0.1 + 0.1)}
-                  initial="hidden"
-                  animate={inView ? "visible" : "hidden"}
-                  className="flex items-start gap-6 py-8 first:pt-0 last:pb-0"
-                >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full border border-[#e0e0ea] flex items-center justify-center bg-white">
-                    <Icon className="w-4 h-4 text-[#16162a]" aria-hidden="true" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <h3
-                      className="text-xl font-semibold text-[#16162a] tracking-tight"
-                      style={{ fontFamily: "var(--font-cormorant)" }}
-                    >
-                      {f.title}
-                    </h3>
-                    <p
-                      className="text-[13px] text-[#8a8aa8] leading-relaxed"
-                      style={{ fontFamily: "var(--font-montserrat)" }}
-                    >
-                      {f.body}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+          {/* Row 2: Speed That Matters */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease, delay: 0.2 }}
+            style={{ display: "flex", alignItems: "flex-start", gap: "20px" }}
+          >
+            <div
+              style={{
+                flexShrink: 0,
+                width: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                border: "1px solid #d8d8e8",
+                background: "#ededf4",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "4px",
+              }}
+            >
+              <Zap style={{ width: 18, height: 18, color: "#16162a" }} aria-hidden="true" />
+            </div>
+            <div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-cormorant)",
+                  fontSize: "clamp(20px, 2.2vw, 26px)",
+                  fontWeight: 700,
+                  color: "#16162a",
+                  lineHeight: 1.1,
+                  marginBottom: "8px",
+                }}
+              >
+                Speed That Matters
+              </h3>
+              <p
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "13px",
+                  color: "#8a8aa8",
+                  lineHeight: 1.7,
+                }}
+              >
+                Most projects launch within a week.
+                <br />
+                We move fast without cutting corners
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Row 3: Built to Perform */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease, delay: 0.3 }}
+            style={{ display: "flex", alignItems: "flex-start", gap: "20px" }}
+          >
+            <div
+              style={{
+                flexShrink: 0,
+                width: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                border: "1px solid #d8d8e8",
+                background: "#ededf4",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "4px",
+              }}
+            >
+              <Target style={{ width: 18, height: 18, color: "#16162a" }} aria-hidden="true" />
+            </div>
+            <div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-cormorant)",
+                  fontSize: "clamp(20px, 2.2vw, 26px)",
+                  fontWeight: 700,
+                  color: "#16162a",
+                  lineHeight: 1.1,
+                  marginBottom: "8px",
+                }}
+              >
+                Built to Perform
+              </h3>
+              <ul
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "13px",
+                  color: "#8a8aa8",
+                  lineHeight: 1.85,
+                  paddingLeft: "16px",
+                  margin: "0 0 6px 0",
+                }}
+              >
+                <li>Fast load times</li>
+                <li>Mobile-first</li>
+                <li>
+                  SEO-ready <em style={{ fontStyle: "italic" }}>out</em> of the box
+                </li>
+              </ul>
+              <p
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "13px",
+                  color: "#8a8aa8",
+                  lineHeight: 1.7,
+                }}
+              >
+                Every single time.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

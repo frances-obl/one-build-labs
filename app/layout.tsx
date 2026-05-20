@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Montserrat, Dancing_Script } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import { ContactModalProvider } from "@/context/ContactModalContext";
 import "./globals.css";
@@ -19,6 +19,13 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-dancing",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "One Build Labs — Premium Web Design",
   description:
@@ -33,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${montserrat.variable}`}
+      className={`${cormorant.variable} ${montserrat.variable} ${dancingScript.variable}`}
     >
       <body className="min-h-screen">
         <SmoothScroll>
