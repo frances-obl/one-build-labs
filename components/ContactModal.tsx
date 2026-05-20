@@ -28,13 +28,10 @@ const BUDGET_RANGES = [
 ];
 
 const PROJECT_TYPES = [
-  "Landing Page",
   "Business Website",
-  "E-Commerce Store",
-  "Portfolio",
-  "SaaS / Web App",
-  "Blog / Content Site",
-  "Redesign",
+  "E-Commerce",
+  "Portfolio / Personal",
+  "Landing Page",
   "Other",
 ];
 
@@ -314,10 +311,9 @@ export default function ContactModal({ isOpen, onClose, initialPlan }: Props) {
                     {/* Row 2: Phone + Country */}
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "14px" }}>
                       <div>
-                        <label style={labelBase}>
-                          Phone <span style={{ fontWeight: 400, color: "#aaa" }}>(optional)</span>
-                        </label>
+                        <label style={labelBase}>Phone</label>
                         <input
+                          required
                           type="tel"
                           placeholder="+1 (555) 000-0000"
                           value={form.phone}
