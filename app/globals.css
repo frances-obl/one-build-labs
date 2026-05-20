@@ -10,6 +10,10 @@ footer {
   scroll-margin-top: 0;
 }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 body {
   background: #f4f4f7;
   color: #16162a;

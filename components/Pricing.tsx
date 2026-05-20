@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check } from "lucide-react";
+import { useContactModal } from "@/context/ContactModalContext";
 
 const tiers = [
   {
@@ -62,6 +63,7 @@ const tiers = [
 export default function Pricing() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { open } = useContactModal();
 
   return (
     <section
@@ -183,8 +185,8 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <a
-                href="#contact"
+              <button
+                onClick={() => open(tier.label)}
                 className={`w-full inline-flex items-center justify-center py-3.5 text-[10px] tracking-[0.18em] font-semibold uppercase transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#16162a]/30 ${
                   tier.featured
                     ? "bg-[#16162a] text-white hover:bg-[#2a2a45]"
@@ -193,7 +195,7 @@ export default function Pricing() {
                 style={{ fontFamily: "var(--font-montserrat)" }}
               >
                 {tier.cta}
-              </a>
+              </button>
             </motion.div>
           ))}
         </div>

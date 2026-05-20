@@ -2,10 +2,12 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useContactModal } from "@/context/ContactModalContext";
 
 export default function CTA() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { open } = useContactModal();
 
   return (
     <section
@@ -67,14 +69,14 @@ export default function CTA() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-            <a
-              href="mailto:hello@onebuildlabs.com"
+            <button
+              onClick={() => open()}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#16162a] text-[10px] tracking-[0.18em] font-semibold uppercase hover:bg-white/90 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/30"
               style={{ fontFamily: "var(--font-montserrat)" }}
             >
               Start Your Project
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-            </a>
+            </button>
             <a
               href="#pricing"
               className="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white text-[10px] tracking-[0.18em] font-semibold uppercase hover:border-white/50 transition-all duration-200 cursor-pointer"

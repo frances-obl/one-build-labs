@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useContactModal } from "@/context/ContactModalContext";
 
 const navLinks = [
   { label: "PROJECTS", href: "#projects" },
@@ -12,6 +13,7 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+  const { open: openContact } = useContactModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -190,8 +192,8 @@ export default function Navbar() {
         </nav>
 
         {/* CTA */}
-        <a
-          href="#contact"
+        <button
+          onClick={() => openContact()}
           className="hidden md:inline-flex"
           style={{
             alignItems: "center",
@@ -204,7 +206,7 @@ export default function Navbar() {
             letterSpacing: "0.1em",
             padding: "10px 24px",
             borderRadius: "9999px",
-            textDecoration: "none",
+            border: "none",
             transition: "background 0.2s",
             cursor: "pointer",
           }}
@@ -216,7 +218,7 @@ export default function Navbar() {
           }
         >
           LET&apos;S TALK
-        </a>
+        </button>
 
         {/* Mobile hamburger */}
         <button
@@ -274,9 +276,8 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            onClick={() => setMobileOpen(false)}
+          <button
+            onClick={() => { setMobileOpen(false); openContact(); }}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -289,11 +290,12 @@ export default function Navbar() {
               letterSpacing: "0.1em",
               padding: "10px 24px",
               borderRadius: "9999px",
-              textDecoration: "none",
+              border: "none",
+              cursor: "pointer",
             }}
           >
             LET&apos;S TALK
-          </a>
+          </button>
         </div>
       )}
     </header>
