@@ -28,7 +28,7 @@ export default function CTA() {
     >
       {/* ── BACKGROUND PHOTO ── */}
       <Image
-        src="/hero-building.png"
+        src="/cta-steps.png"
         alt=""
         fill
         priority
@@ -36,12 +36,11 @@ export default function CTA() {
         style={{
           objectFit: "cover",
           /*
-           * right = align photo's right edge to banner's right edge so
-           *         the stepped facade sits flush on the right side.
-           * 42%   = vertical crop sits just above mid-height of the
-           *         scaled image, capturing both sky and upper building.
+           * right = anchor the stepped architecture to the right edge.
+           * 55%   = crop sits just below center to capture the staircase
+           *         ledges prominently while keeping the sky visible left.
            */
-          objectPosition: "right 42%",
+          objectPosition: "right 55%",
         }}
         aria-hidden="true"
       />
@@ -55,7 +54,7 @@ export default function CTA() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(228, 233, 243, 0.58)",
+          background: "rgba(220, 228, 240, 0.38)",
         }}
       />
 
