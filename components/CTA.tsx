@@ -36,27 +36,26 @@ export default function CTA() {
         style={{
           objectFit: "cover",
           /*
-           * Position the crop so the sky dominates the left ~65 %
-           * and the white stepped facade appears on the right edge.
-           * x = 62% pulls the image slightly right-of-centre;
-           * y = 62% drops the crop into the lower half where the
-           * building geometry begins to appear.
+           * right = align photo's right edge to banner's right edge so
+           *         the stepped facade sits flush on the right side.
+           * 42%   = vertical crop sits just above mid-height of the
+           *         scaled image, capturing both sky and upper building.
            */
-          objectPosition: "62% 62%",
+          objectPosition: "right 42%",
         }}
         aria-hidden="true"
       />
 
       {/*
        * ── LIGHT-WASH OVERLAY ──
-       * Matches the pale blue-white tone in the reference.
-       * Low enough opacity that the stepped facade stays visible.
+       * 0.58 opacity keeps the building clearly legible while tinting
+       * the sky to the site's pale blue-gray (#e8ecf5 family).
        */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(232, 236, 245, 0.68)",
+          background: "rgba(228, 233, 243, 0.58)",
         }}
       />
 
