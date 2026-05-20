@@ -1,113 +1,205 @@
+"use client";
+import { useContactModal } from "@/context/ContactModalContext";
+
+const navigate = [
+  { label: "Work", href: "#projects" },
+  { label: "About", href: "#about" },
+  { label: "Process", href: "#process" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Support", href: "#contact" },
+];
+
+const linkStyle: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)",
+  fontSize: "13px",
+  fontWeight: 400,
+  color: "#6b7280",
+  textDecoration: "none",
+  transition: "color 0.2s",
+  display: "block",
+};
+
+const headingStyle: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)",
+  fontSize: "10px",
+  fontWeight: 700,
+  letterSpacing: "0.22em",
+  color: "#1a2040",
+  textTransform: "uppercase",
+  marginBottom: "20px",
+};
+
 export default function Footer() {
   const year = new Date().getFullYear();
-
-  const cols = [
-    {
-      heading: "Pages",
-      links: [
-        { label: "Projects", href: "#projects" },
-        { label: "About Us", href: "#about" },
-        { label: "Process", href: "#process" },
-        { label: "Pricing", href: "#pricing" },
-      ],
-    },
-    {
-      heading: "Company",
-      links: [
-        { label: "About", href: "#about" },
-        { label: "Contact", href: "#contact" },
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
-      ],
-    },
-    {
-      heading: "Contact",
-      links: [
-        { label: "hello@onebuildlabs.com", href: "mailto:hello@onebuildlabs.com" },
-        { label: "Instagram", href: "#" },
-        { label: "LinkedIn", href: "#" },
-        { label: "X / Twitter", href: "#" },
-      ],
-    },
-  ];
+  const { open } = useContactModal();
 
   return (
     <footer
-      className="bg-[#f4f4f7] border-t border-[#e0e0ea]"
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
+      style={{
+        background: "#eceef4",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 pb-12 border-b border-[#e0e0ea]">
-          {/* Brand */}
-          <div className="space-y-5">
-            <div className="flex items-center gap-3">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <rect x="12" y="1" width="4" height="26" fill="#16162a" />
-                <rect x="1" y="12" width="26" height="4" fill="#16162a" />
-                <rect x="8.5" y="4.5" width="3" height="3" fill="#16162a" opacity="0.25" />
-                <rect x="16.5" y="20.5" width="3" height="3" fill="#16162a" opacity="0.25" />
-              </svg>
-              <span
-                className="text-[10px] tracking-[0.22em] font-semibold text-[#16162a] uppercase"
-                style={{ fontFamily: "var(--font-montserrat)" }}
-              >
-                One Build Labs
-              </span>
-            </div>
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "0 40px",
+          width: "100%",
+        }}
+      >
+        {/* Main grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr auto auto",
+            gap: "80px",
+            alignItems: "start",
+            paddingBottom: "48px",
+            borderBottom: "1px solid #d8dae4",
+            marginBottom: "32px",
+          }}
+        >
+          {/* Brand block */}
+          <div>
             <p
-              className="text-[12px] text-[#8a8aa8] leading-relaxed max-w-[220px]"
-              style={{ fontFamily: "var(--font-montserrat)" }}
+              style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "clamp(36px, 4vw, 56px)",
+                fontWeight: 700,
+                color: "#1a2040",
+                lineHeight: 1,
+                letterSpacing: "-0.02em",
+                marginBottom: "14px",
+              }}
             >
-              Premium web design for companies that want to stand out.
+              ONE BUILD LABS
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "18px",
+                fontWeight: 400,
+                color: "#6b7280",
+                lineHeight: 1.4,
+              }}
+            >
+              Premium web design,
+              <br />
+              built for growth
             </p>
           </div>
 
-          {/* Nav columns */}
-          {cols.map((col) => (
-            <div key={col.heading} className="space-y-5">
-              <p
-                className="text-[9px] tracking-[0.22em] font-semibold text-[#16162a] uppercase"
-                style={{ fontFamily: "var(--font-montserrat)" }}
-              >
-                {col.heading}
-              </p>
-              <ul className="space-y-3">
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-[12px] text-[#8a8aa8] hover:text-[#16162a] transition-colors duration-200"
-                      style={{ fontFamily: "var(--font-montserrat)" }}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Navigate column */}
+          <div>
+            <p style={headingStyle}>Navigate</p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
+              {navigate.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    style={linkStyle}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1a2040"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#6b7280"; }}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Connect column */}
+          <div>
+            <p style={headingStyle}>Connect</p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
+              <li>
+                <button
+                  onClick={() => open()}
+                  style={{
+                    ...linkStyle,
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1a2040"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#6b7280"; }}
+                >
+                  Contact Us
+                </button>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  style={linkStyle}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1a2040"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#6b7280"; }}
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  style={linkStyle}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1a2040"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#6b7280"; }}
+                >
+                  LinkedIn
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "12px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
+            <p
+              style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "11px",
+                color: "#9ca3af",
+              }}
+            >
+              &copy; {year} One Build Labs. All rights reserved.
+            </p>
+            <a
+              href="#"
+              style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "11px",
+                color: "#9ca3af",
+                textDecoration: "none",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1a2040"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#9ca3af"; }}
+            >
+              Privacy Policy
+            </a>
+          </div>
+
           <p
-            className="text-[11px] text-[#8a8aa8]"
-            style={{ fontFamily: "var(--font-montserrat)" }}
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "11px",
+              color: "#9ca3af",
+            }}
           >
-            {year} One Build Labs. All rights reserved.
-          </p>
-          <p
-            className="text-[11px] text-[#8a8aa8]"
-            style={{ fontFamily: "var(--font-montserrat)" }}
-          >
-            Built with D1 Vibe Coding
+            Designed &amp; Built by Frances &amp; Jose
           </p>
         </div>
       </div>
