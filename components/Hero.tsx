@@ -8,31 +8,44 @@ export default function Hero() {
   return (
     <section
       style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
+        position: "relative",
         height: "100vh",
         overflow: "hidden",
-        position: "relative",
       }}
     >
-      {/* ── LEFT PANEL ── */}
+      {/* ── FULL-BLEED BACKGROUND PHOTO ── */}
+      <Image
+        src="/hero-building.png"
+        alt="Modern angular architecture building with white geometric facade"
+        fill
+        style={{
+          objectFit: "cover",
+          objectPosition: "center center",
+        }}
+        priority
+        sizes="100vw"
+      />
+
+      {/* ── TEXT OVERLAY — sits over the sky portion on the left ── */}
       <div
         style={{
-          background: "#eceef4",
+          position: "absolute",
+          inset: 0,
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
           paddingTop: "clamp(120px, 22vh, 220px)",
-          paddingBottom: "60px",
           paddingLeft: "80px",
-          paddingRight: "64px",
+          paddingRight: "60px",
+          maxWidth: "620px",
+          zIndex: 1,
         }}
       >
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease }}
-          style={{ display: "flex", flexDirection: "column", gap: 0 }}
+          style={{ display: "flex", flexDirection: "column" }}
         >
           {/* Eyebrow */}
           <p
@@ -87,23 +100,6 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
-
-      {/* ── RIGHT PANEL: full-bleed photo ── */}
-      <motion.div
-        style={{ position: "relative" }}
-        initial={{ opacity: 0, scale: 1.04 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease }}
-      >
-        <Image
-          src="/hero-building.png"
-          alt="Modern angular architecture building with white geometric facade"
-          fill
-          style={{ objectFit: "cover", objectPosition: "center" }}
-          priority
-          sizes="50vw"
-        />
-      </motion.div>
     </section>
   );
 }
@@ -133,6 +129,7 @@ function HeroBtn({
         cursor: "pointer",
         textDecoration: "none",
         transition: "background 0.2s, color 0.2s",
+        whiteSpace: "nowrap",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
