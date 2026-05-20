@@ -3,12 +3,16 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MessageSquare, Pencil, Code2, Rocket } from "lucide-react";
 
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+const CIRCLE_SIZE = 80; /* px — must match the w/h below */
+
 const steps = [
   {
     number: "01",
     icon: MessageSquare,
     title: "Discovery",
-    body: "We hop on a quick call to understand your business, goals, and vision. No fluff.",
+    body: "We hop on a quick call to understand your business, goals, and vibe. No fluff.",
   },
   {
     number: "02",
@@ -38,41 +42,90 @@ export default function Process() {
     <section
       id="process"
       ref={ref}
-      className="py-20 md:py-24 bg-[#f4f4f7]"
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
+      style={{
+        background: "#f4f4f7",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "clamp(60px, 8vw, 120px) clamp(24px, 5vw, 80px)",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
+      <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
+
+        {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-          className="text-center mb-20 space-y-4"
+          transition={{ duration: 0.75, ease }}
+          style={{ textAlign: "center", marginBottom: "clamp(52px, 7vw, 96px)" }}
         >
           <p
-            className="text-[10px] tracking-[0.28em] text-[#8a8aa8] uppercase"
-            style={{ fontFamily: "var(--font-montserrat)" }}
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "10px",
+              fontWeight: 700,
+              letterSpacing: "0.28em",
+              color: "#8a8aa8",
+              textTransform: "uppercase",
+              marginBottom: "20px",
+            }}
           >
             Our Process
           </p>
           <h2
-            className="text-[clamp(2.4rem,5vw,4rem)] font-bold text-[#16162a] leading-[0.95] tracking-tight"
-            style={{ fontFamily: "var(--font-cormorant)" }}
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(2.4rem, 5vw, 4.2rem)",
+              fontWeight: 700,
+              color: "#16162a",
+              lineHeight: 1,
+              letterSpacing: "-0.02em",
+              marginBottom: "18px",
+            }}
           >
             From idea to launch in four steps.
           </h2>
           <p
-            className="text-[13px] text-[#8a8aa8] max-w-lg mx-auto leading-relaxed"
-            style={{ fontFamily: "var(--font-montserrat)" }}
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "13px",
+              color: "#8a8aa8",
+              lineHeight: 1.7,
+              maxWidth: "540px",
+              margin: "0 auto",
+            }}
           >
             A streamlined process that keeps things simple, fast, and transparent from start to finish.
           </p>
         </motion.div>
 
-        {/* Steps */}
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-          {/* Connecting line on desktop */}
-          <div className="hidden lg:block absolute top-[52px] left-[calc(12.5%+28px)] right-[calc(12.5%+28px)] h-px bg-[#e0e0ea]" />
+        {/* ── Steps ── */}
+        <div
+          style={{
+            position: "relative",
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "clamp(16px, 3vw, 40px)",
+          }}
+        >
+          {/*
+           * Connecting line: runs horizontally dead-center through the icon circles.
+           * top = CIRCLE_SIZE / 2 so it bisects the 80px circles.
+           * left/right trimmed to the center of the first/last circle (1/8 of grid width each).
+           */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: `${CIRCLE_SIZE / 2}px`,
+              left: "calc(12.5%)",
+              right: "calc(12.5%)",
+              height: "1px",
+              background: "#d8d8e4",
+              zIndex: 0,
+            }}
+          />
 
           {steps.map((step, i) => {
             const Icon = step.icon;
@@ -81,31 +134,76 @@ export default function Process() {
                 key={step.title}
                 initial={{ opacity: 0, y: 28 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: i * 0.1 + 0.1 }}
-                className="flex flex-col items-center text-center"
+                transition={{ duration: 0.7, ease, delay: 0.12 + i * 0.1 }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                  position: "relative",
+                  zIndex: 1,
+                }}
               >
                 {/* Icon circle */}
-                <div className="relative mb-6 w-14 h-14 rounded-full border border-[#e0e0ea] bg-white flex items-center justify-center shadow-sm z-10">
-                  <Icon className="w-5 h-5 text-[#16162a]" aria-hidden="true" />
+                <div
+                  style={{
+                    width: `${CIRCLE_SIZE}px`,
+                    height: `${CIRCLE_SIZE}px`,
+                    borderRadius: "50%",
+                    border: "1px solid #e0e0ea",
+                    background: "#f0f0f6",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "20px",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Icon
+                    style={{ width: 22, height: 22, color: "#16162a" }}
+                    aria-hidden="true"
+                  />
                 </div>
 
+                {/* Step number */}
                 <p
-                  className="text-[10px] tracking-[0.2em] text-[#8a8aa8] uppercase mb-2"
-                  style={{ fontFamily: "var(--font-montserrat)" }}
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.2em",
+                    color: "#b0b0c4",
+                    marginBottom: "8px",
+                  }}
                 >
                   {step.number}
                 </p>
 
+                {/* Step title */}
                 <h3
-                  className="text-2xl font-semibold text-[#16162a] mb-3 tracking-tight"
-                  style={{ fontFamily: "var(--font-cormorant)" }}
+                  style={{
+                    fontFamily: "var(--font-cormorant)",
+                    fontSize: "clamp(20px, 2vw, 26px)",
+                    fontWeight: 600,
+                    color: "#16162a",
+                    lineHeight: 1.1,
+                    letterSpacing: "-0.01em",
+                    marginBottom: "12px",
+                  }}
                 >
                   {step.title}
                 </h3>
 
+                {/* Step body */}
                 <p
-                  className="text-[12px] text-[#8a8aa8] leading-relaxed max-w-[200px]"
-                  style={{ fontFamily: "var(--font-montserrat)" }}
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "12px",
+                    color: "#8a8aa8",
+                    lineHeight: 1.75,
+                    maxWidth: "180px",
+                  }}
                 >
                   {step.body}
                 </p>
