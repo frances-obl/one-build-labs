@@ -48,17 +48,65 @@ export default function Navbar() {
           }}
         >
           <svg
-            width="30"
-            height="30"
-            viewBox="0 0 30 30"
+            width="36"
+            height="34"
+            viewBox="0 0 200 185"
             fill="none"
             aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <circle cx="15" cy="15" r="14" stroke="#1a2040" strokeWidth="1.4" />
-            <line x1="15" y1="6" x2="15" y2="24" stroke="#1a2040" strokeWidth="1.4" strokeLinecap="round" />
-            <line x1="6" y1="15" x2="24" y2="15" stroke="#1a2040" strokeWidth="1.4" strokeLinecap="round" />
-            <line x1="9.5" y1="9.5" x2="20.5" y2="20.5" stroke="#1a2040" strokeWidth="1.1" strokeLinecap="round" />
-            <line x1="20.5" y1="9.5" x2="9.5" y2="20.5" stroke="#1a2040" strokeWidth="1.1" strokeLinecap="round" />
+            <defs>
+              {/* Top-to-bottom gradient: light sky blue → deep navy */}
+              <linearGradient id="nb-body" x1="100" y1="58" x2="100" y2="172" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#82bff0" />
+                <stop offset="100%" stopColor="#132d7a" />
+              </linearGradient>
+              {/* Wing gradient: dark navy at tips, mid-blue toward center */}
+              <linearGradient id="nb-wing" x1="0" y1="90" x2="200" y2="90" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stopColor="#132d7a" />
+                <stop offset="35%"  stopColor="#4a88cc" />
+                <stop offset="65%"  stopColor="#4a88cc" />
+                <stop offset="100%" stopColor="#132d7a" />
+              </linearGradient>
+              {/* Star gradient: pale blue at top → mid blue at bottom */}
+              <linearGradient id="nb-star" x1="100" y1="48" x2="100" y2="122" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stopColor="#c8e4f8" />
+                <stop offset="50%"  stopColor="#70b2e8" />
+                <stop offset="100%" stopColor="#3a6ec0" />
+              </linearGradient>
+            </defs>
+
+            {/* Outer diamond outline — light silver-blue ghost */}
+            <polygon
+              points="100,6 192,90 100,174 8,90"
+              fill="rgba(180,210,235,0.18)"
+              stroke="#bdd4e8"
+              strokeWidth="1.4"
+            />
+
+            {/* Left double-chevron wing */}
+            <polygon
+              points="8,90 50,60 63,72 34,90 63,108 50,120"
+              fill="url(#nb-wing)"
+            />
+
+            {/* Right double-chevron wing (mirror) */}
+            <polygon
+              points="192,90 150,60 137,72 166,90 137,108 150,120"
+              fill="url(#nb-wing)"
+            />
+
+            {/* Center body — connects wings, bottom diamond */}
+            <polygon
+              points="100,58 137,72 166,90 137,108 100,172 63,108 34,90 63,72"
+              fill="url(#nb-body)"
+            />
+
+            {/* 4-pointed star (elongated, slim) */}
+            <path
+              d="M100,48 L104,74 L118,90 L104,106 L100,132 L96,106 L82,90 L96,74 Z"
+              fill="url(#nb-star)"
+            />
           </svg>
           <span
             style={{
