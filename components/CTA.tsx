@@ -8,7 +8,7 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export default function CTA() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
   const { open } = useContactModal();
 
   return (
@@ -17,99 +17,113 @@ export default function CTA() {
       ref={ref}
       style={{
         position: "relative",
-        /* 3.65 : 1 ultra-wide banner — min-height keeps it usable on small screens */
-        aspectRatio: "3.65 / 1",
-        minHeight: "240px",
-        maxHeight: "520px",
+        /* Exact 3.65 : 1 ultra-wide banner — scales with viewport width */
         width: "100%",
+        aspectRatio: "3.65 / 1",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      {/* Building photo — positioned to show sky left, architecture right */}
+      {/* ── BACKGROUND PHOTO ── */}
       <Image
         src="/hero-building.png"
         alt=""
         fill
+        priority
+        sizes="100vw"
         style={{
           objectFit: "cover",
-          objectPosition: "center 25%",
+          /*
+           * Position the crop so the sky dominates the left ~65 %
+           * and the white stepped facade appears on the right edge.
+           * x = 62% pulls the image slightly right-of-centre;
+           * y = 62% drops the crop into the lower half where the
+           * building geometry begins to appear.
+           */
+          objectPosition: "62% 62%",
         }}
-        sizes="100vw"
         aria-hidden="true"
       />
 
-      {/* Very light overlay — nearly washes the photo to pale blue-white */}
+      {/*
+       * ── LIGHT-WASH OVERLAY ──
+       * Matches the pale blue-white tone in the reference.
+       * Low enough opacity that the stepped facade stays visible.
+       */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(240, 242, 248, 0.80)",
+          background: "rgba(232, 236, 245, 0.68)",
         }}
       />
 
-      {/* Content — centred in the banner */}
+      {/* ── TEXT CONTENT ── */}
       <div
         style={{
           position: "relative",
           zIndex: 1,
           textAlign: "center",
-          padding: "0 40px",
-          maxWidth: "800px",
           width: "100%",
+          padding: "0 clamp(20px, 5vw, 80px)",
         }}
       >
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.85, ease }}
+          transition={{ duration: 0.9, ease }}
+          style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
         >
+          {/* Headline */}
           <h2
             style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(1.75rem, 3.6vw, 3.2rem)",
+              fontSize: "clamp(1.6rem, 3.2vw, 3rem)",
               fontWeight: 700,
               color: "#1a2040",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
-              marginBottom: "14px",
+              marginBottom: "clamp(10px, 1.2vw, 18px)",
+              maxWidth: "700px",
             }}
           >
             Ready to level up your online presence?
           </h2>
 
+          {/* Body */}
           <p
             style={{
               fontFamily: "var(--font-montserrat)",
-              fontSize: "clamp(11px, 1.05vw, 14px)",
+              fontSize: "clamp(10.5px, 0.95vw, 14px)",
               fontWeight: 400,
-              color: "#4b5563",
-              lineHeight: 1.7,
-              marginBottom: "28px",
-              maxWidth: "640px",
-              margin: "0 auto 28px",
+              color: "#5a6280",
+              lineHeight: 1.75,
+              marginBottom: "clamp(18px, 2vw, 32px)",
+              maxWidth: "620px",
             }}
           >
             Let&apos;s chat about your project. Most sites are live within a week.
             No agencies, no overhead, just two people who care.
           </p>
 
+          {/* CTA button — outlined rectangle, no border-radius */}
           <button
             onClick={() => open()}
             style={{
               fontFamily: "var(--font-montserrat)",
-              fontSize: "clamp(9px, 0.75vw, 11px)",
+              fontSize: "clamp(8.5px, 0.65vw, 11px)",
               fontWeight: 700,
               letterSpacing: "0.18em",
               color: "#1a2040",
               background: "transparent",
               border: "1.5px solid #1a2040",
-              padding: "12px 32px",
+              padding: "clamp(9px, 0.85vw, 13px) clamp(20px, 2.2vw, 34px)",
               borderRadius: 0,
               cursor: "pointer",
               transition: "background 0.2s, color 0.2s",
+              whiteSpace: "nowrap",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget;
