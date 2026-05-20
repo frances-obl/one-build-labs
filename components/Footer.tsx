@@ -37,17 +37,19 @@ export default function Footer() {
     <footer
       style={{
         background: "#eceef4",
-        minHeight: "100vh",
+        width: "100%",
+        aspectRatio: "3.65 / 1",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        overflow: "hidden",
       }}
     >
       <div
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 40px",
+          padding: "0 clamp(24px, 4vw, 60px)",
           width: "100%",
         }}
       >
@@ -56,11 +58,11 @@ export default function Footer() {
           style={{
             display: "grid",
             gridTemplateColumns: "1fr auto auto",
-            gap: "80px",
+            gap: "clamp(32px, 5vw, 80px)",
             alignItems: "start",
-            paddingBottom: "48px",
+            paddingBottom: "clamp(20px, 2.5vw, 40px)",
             borderBottom: "1px solid #d8dae4",
-            marginBottom: "32px",
+            marginBottom: "clamp(14px, 1.8vw, 28px)",
           }}
         >
           {/* Brand block */}
@@ -68,12 +70,12 @@ export default function Footer() {
             <p
               style={{
                 fontFamily: "var(--font-cormorant)",
-                fontSize: "clamp(36px, 4vw, 56px)",
+                fontSize: "clamp(22px, 3.2vw, 52px)",
                 fontWeight: 700,
                 color: "#1a2040",
                 lineHeight: 1,
                 letterSpacing: "-0.02em",
-                marginBottom: "14px",
+                marginBottom: "clamp(6px, 0.8vw, 12px)",
               }}
             >
               ONE BUILD LABS
