@@ -12,17 +12,11 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { open: openContact } = useContactModal();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const nearBottom = scrollY + winHeight >= docHeight - 200;
-      setVisible(scrollY > 80 && !nearBottom);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -36,23 +30,36 @@ export default function Navbar() {
         right: 0,
         zIndex: 50,
         padding: "14px 20px",
-        transform: visible ? "translateY(0)" : "translateY(-100%)",
-        opacity: visible ? 1 : 0,
-        transition: "transform 0.35s ease, opacity 0.35s ease",
+        /* Always visible — no transform or opacity changes */
       }}
     >
-      {/* Pill wrapper */}
+      {/* ── Pill wrapper ── */}
       <div
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          background: "white",
           borderRadius: "9999px",
           padding: "10px 16px 10px 20px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          boxShadow: "0 2px 20px rgba(0,0,0,0.07)",
+          /*
+           * Scroll-aware glassmorphism:
+           *   At rest  → clean white pill, light shadow
+           *   Scrolled → frosted-glass white, richer shadow + blur
+           */
+          background: scrolled
+            ? "rgba(255, 255, 255, 0.82)"
+            : "rgba(255, 255, 255, 1)",
+          backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
+          WebkitBackdropFilter: scrolled
+            ? "blur(20px) saturate(180%)"
+            : "none",
+          boxShadow: scrolled
+            ? "0 4px 28px rgba(0,0,0,0.10), 0 1px 6px rgba(0,0,0,0.06)"
+            : "0 2px 20px rgba(0,0,0,0.07)",
+          transition:
+            "background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease",
         }}
       >
         {/* Logo */}
@@ -74,53 +81,40 @@ export default function Navbar() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              {/* Top-to-bottom gradient: light sky blue → deep navy */}
               <linearGradient id="nb-body" x1="100" y1="58" x2="100" y2="172" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stopColor="#82bff0" />
                 <stop offset="100%" stopColor="#132d7a" />
               </linearGradient>
-              {/* Wing gradient: dark navy at tips, mid-blue toward center */}
               <linearGradient id="nb-wing" x1="0" y1="90" x2="200" y2="90" gradientUnits="userSpaceOnUse">
                 <stop offset="0%"   stopColor="#132d7a" />
                 <stop offset="35%"  stopColor="#4a88cc" />
                 <stop offset="65%"  stopColor="#4a88cc" />
                 <stop offset="100%" stopColor="#132d7a" />
               </linearGradient>
-              {/* Star gradient: pale blue at top → mid blue at bottom */}
               <linearGradient id="nb-star" x1="100" y1="48" x2="100" y2="122" gradientUnits="userSpaceOnUse">
                 <stop offset="0%"   stopColor="#c8e4f8" />
                 <stop offset="50%"  stopColor="#70b2e8" />
                 <stop offset="100%" stopColor="#3a6ec0" />
               </linearGradient>
             </defs>
-
-            {/* Outer diamond outline — light silver-blue ghost */}
             <polygon
               points="100,6 192,90 100,174 8,90"
               fill="rgba(180,210,235,0.18)"
               stroke="#bdd4e8"
               strokeWidth="1.4"
             />
-
-            {/* Left double-chevron wing */}
             <polygon
               points="8,90 50,60 63,72 34,90 63,108 50,120"
               fill="url(#nb-wing)"
             />
-
-            {/* Right double-chevron wing (mirror) */}
             <polygon
               points="192,90 150,60 137,72 166,90 137,108 150,120"
               fill="url(#nb-wing)"
             />
-
-            {/* Center body — connects wings, bottom diamond */}
             <polygon
               points="100,58 137,72 166,90 137,108 100,172 63,108 34,90 63,72"
               fill="url(#nb-body)"
             />
-
-            {/* 4-pointed star (elongated, slim) */}
             <path
               d="M100,48 L104,74 L118,90 L104,106 L100,132 L96,106 L82,90 L96,74 Z"
               fill="url(#nb-star)"
@@ -140,21 +134,14 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* Desktop nav links with separators */}
+        {/* Desktop nav links */}
         <nav
           aria-label="Main navigation"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 0,
-          }}
+          style={{ display: "flex", alignItems: "center", gap: 0 }}
           className="hidden md:flex"
         >
           {navLinks.map((link, i) => (
-            <div
-              key={link.label}
-              style={{ display: "flex", alignItems: "center" }}
-            >
+            <div key={link.label} style={{ display: "flex", alignItems: "center" }}>
               {i > 0 && (
                 <span
                   style={{
@@ -191,7 +178,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* CTA */}
+        {/* Desktop CTA */}
         <button
           onClick={() => openContact()}
           className="hidden md:inline-flex"
@@ -249,10 +236,12 @@ export default function Navbar() {
           style={{
             maxWidth: "1280px",
             margin: "8px auto 0",
-            background: "white",
+            background: "rgba(255, 255, 255, 0.95)",
+            backdropFilter: "blur(20px) saturate(180%)",
+            WebkitBackdropFilter: "blur(20px) saturate(180%)",
             borderRadius: "20px",
             padding: "20px 24px",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.1)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.10)",
             display: "flex",
             flexDirection: "column",
             gap: "16px",
