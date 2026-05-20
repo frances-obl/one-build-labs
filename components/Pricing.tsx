@@ -64,7 +64,12 @@ export default function Pricing() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="pricing" ref={ref} className="py-28 md:py-36 bg-[#ececf2]">
+    <section
+      id="pricing"
+      ref={ref}
+      className="py-16 md:py-20 bg-[#ececf2]"
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
+    >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div

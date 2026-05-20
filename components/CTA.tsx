@@ -11,8 +11,14 @@ export default function CTA() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-32 md:py-44 overflow-hidden"
-      style={{ background: "#16162a" }}
+      className="relative py-20 overflow-hidden"
+      style={{
+        background: "#16162a",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
     >
       {/* Atmospheric background layers */}
       <div

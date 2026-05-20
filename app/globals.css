@@ -4,8 +4,10 @@ html {
   scroll-behavior: smooth;
 }
 
-* {
-  scroll-margin-top: 100px;
+/* Give Lenis snap targets accurate scroll-margin so nav links land correctly */
+section,
+footer {
+  scroll-margin-top: 0;
 }
 
 body {

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -11,6 +11,19 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      const nearBottom = scrollY + winHeight >= docHeight - 200;
+      setVisible(scrollY > 80 && !nearBottom);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
@@ -21,6 +34,9 @@ export default function Navbar() {
         right: 0,
         zIndex: 50,
         padding: "14px 20px",
+        transform: visible ? "translateY(0)" : "translateY(-100%)",
+        opacity: visible ? 1 : 0,
+        transition: "transform 0.35s ease, opacity 0.35s ease",
       }}
     >
       {/* Pill wrapper */}

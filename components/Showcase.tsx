@@ -62,7 +62,12 @@ export default function Showcase() {
   };
 
   return (
-    <section id="projects" ref={ref} className="py-28 md:py-36 bg-[#ececf2] overflow-hidden">
+    <section
+      id="projects"
+      ref={ref}
+      className="py-16 md:py-20 bg-[#ececf2]"
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden" }}
+    >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">

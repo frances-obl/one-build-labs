@@ -10,6 +10,7 @@ export default function Hero() {
       style={{
         position: "relative",
         height: "100vh",
+        minHeight: "100vh",
         overflow: "hidden",
       }}
     >

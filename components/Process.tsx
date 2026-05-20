@@ -35,7 +35,12 @@ export default function Process() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="process" ref={ref} className="py-28 md:py-36 bg-[#f4f4f7]">
+    <section
+      id="process"
+      ref={ref}
+      className="py-20 md:py-24 bg-[#f4f4f7]"
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
+    >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
