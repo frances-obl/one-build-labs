@@ -17,57 +17,64 @@ export default function CTA() {
       ref={ref}
       style={{
         position: "relative",
-        minHeight: "100vh",
+        /* 3.65 : 1 ultra-wide banner — min-height keeps it usable on small screens */
+        aspectRatio: "3.65 / 1",
+        minHeight: "240px",
+        maxHeight: "520px",
+        width: "100%",
+        overflow: "hidden",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        overflow: "hidden",
       }}
     >
-      {/* Hero building photo — heavily washed out */}
+      {/* Building photo — positioned to show sky left, architecture right */}
       <Image
         src="/hero-building.png"
         alt=""
         fill
-        style={{ objectFit: "cover", objectPosition: "center center" }}
+        style={{
+          objectFit: "cover",
+          objectPosition: "center 25%",
+        }}
         sizes="100vw"
         aria-hidden="true"
       />
 
-      {/* Light overlay to wash it out to the pale blue-gray tone */}
+      {/* Very light overlay — nearly washes the photo to pale blue-white */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(236, 238, 244, 0.82)",
+          background: "rgba(240, 242, 248, 0.80)",
         }}
       />
 
-      {/* Content */}
+      {/* Content — centred in the banner */}
       <div
         style={{
           position: "relative",
           zIndex: 1,
           textAlign: "center",
-          maxWidth: "740px",
-          padding: "0 24px",
+          padding: "0 40px",
+          maxWidth: "800px",
+          width: "100%",
         }}
       >
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.85, ease }}
         >
           <h2
             style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+              fontSize: "clamp(1.75rem, 3.6vw, 3.2rem)",
               fontWeight: 700,
               color: "#1a2040",
-              lineHeight: 1.08,
+              lineHeight: 1.1,
               letterSpacing: "-0.02em",
-              marginBottom: "22px",
+              marginBottom: "14px",
             }}
           >
             Ready to level up your online presence?
@@ -76,12 +83,13 @@ export default function CTA() {
           <p
             style={{
               fontFamily: "var(--font-montserrat)",
-              fontSize: "14px",
+              fontSize: "clamp(11px, 1.05vw, 14px)",
               fontWeight: 400,
               color: "#4b5563",
-              lineHeight: 1.75,
-              maxWidth: "560px",
-              margin: "0 auto 40px",
+              lineHeight: 1.7,
+              marginBottom: "28px",
+              maxWidth: "640px",
+              margin: "0 auto 28px",
             }}
           >
             Let&apos;s chat about your project. Most sites are live within a week.
@@ -92,13 +100,13 @@ export default function CTA() {
             onClick={() => open()}
             style={{
               fontFamily: "var(--font-montserrat)",
-              fontSize: "11px",
+              fontSize: "clamp(9px, 0.75vw, 11px)",
               fontWeight: 700,
               letterSpacing: "0.18em",
               color: "#1a2040",
               background: "transparent",
               border: "1.5px solid #1a2040",
-              padding: "14px 36px",
+              padding: "12px 32px",
               borderRadius: 0,
               cursor: "pointer",
               transition: "background 0.2s, color 0.2s",
