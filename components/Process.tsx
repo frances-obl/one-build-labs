@@ -78,7 +78,7 @@ export default function Process() {
               fontFamily: "var(--font-cormorant)",
               fontSize: "clamp(2.4rem, 5vw, 4.2rem)",
               fontWeight: 700,
-              color: "#16162a",
+              color: "#1a2040",
               lineHeight: 1,
               letterSpacing: "-0.02em",
               marginBottom: "18px",
@@ -90,7 +90,7 @@ export default function Process() {
             style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "13px",
-              color: "#8a8aa8",
+              color: "#6b7280",
               lineHeight: 1.7,
               maxWidth: "540px",
               margin: "0 auto",
@@ -161,7 +161,7 @@ export default function Process() {
                   }}
                 >
                   <Icon
-                    style={{ width: 22, height: 22, color: "#16162a" }}
+                    style={{ width: 22, height: 22, color: "#1a2040" }}
                     aria-hidden="true"
                   />
                 </div>
@@ -173,7 +173,7 @@ export default function Process() {
                     fontSize: "10px",
                     fontWeight: 600,
                     letterSpacing: "0.2em",
-                    color: "#b0b0c4",
+                    color: "#8a8aa8",
                     marginBottom: "8px",
                   }}
                 >
@@ -186,7 +186,7 @@ export default function Process() {
                     fontFamily: "var(--font-cormorant)",
                     fontSize: "clamp(20px, 2vw, 26px)",
                     fontWeight: 600,
-                    color: "#16162a",
+                    color: "#1a2040",
                     lineHeight: 1.1,
                     letterSpacing: "-0.01em",
                     marginBottom: "12px",
@@ -200,7 +200,7 @@ export default function Process() {
                   style={{
                     fontFamily: "var(--font-montserrat)",
                     fontSize: "12px",
-                    color: "#8a8aa8",
+                    color: "#6b7280",
                     lineHeight: 1.75,
                     maxWidth: "180px",
                   }}

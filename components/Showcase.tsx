@@ -136,7 +136,7 @@ export default function Showcase() {
             fontFamily: "var(--font-cormorant)",
             fontSize: "clamp(2.4rem, 5vw, 4rem)",
             fontWeight: 700,
-            color: "#16162a",
+            color: "#1a2040",
             lineHeight: 1,
             letterSpacing: "-0.025em",
             marginBottom: "14px",
@@ -148,7 +148,7 @@ export default function Showcase() {
           style={{
             fontFamily: "var(--font-montserrat)",
             fontSize: "13px",
-            color: "#8a8aa8",
+            color: "#6b7280",
             lineHeight: 1.6,
           }}
         >
@@ -283,21 +283,21 @@ export default function Showcase() {
             fontSize: "10.5px",
             fontWeight: 700,
             letterSpacing: "0.18em",
-            color: "#16162a",
+            color: "#1a2040",
             background: "transparent",
-            border: "1.5px solid #16162a",
+            border: "1.5px solid #1a2040",
             padding: "13px 36px",
             borderRadius: 0,
             cursor: "pointer",
             transition: "background 0.2s, color 0.2s",
           }}
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "#16162a";
+            (e.currentTarget as HTMLElement).style.background = "#1a2040";
             (e.currentTarget as HTMLElement).style.color = "white";
           }}
           onMouseLeave={(e) => {
             (e.currentTarget as HTMLElement).style.background = "transparent";
-            (e.currentTarget as HTMLElement).style.color = "#16162a";
+            (e.currentTarget as HTMLElement).style.color = "#1a2040";
           }}
         >
           START YOUR PROJECT
@@ -406,7 +406,7 @@ function ProjectCard({
               fontFamily: "var(--font-cormorant)",
               fontSize: "clamp(17px, 2vw, 22px)",
               fontWeight: 700,
-              color: "#16162a",
+              color: "#1a2040",
               lineHeight: 1.1,
             }}
           >
@@ -432,7 +432,7 @@ function ProjectCard({
           style={{
             fontFamily: "var(--font-montserrat)",
             fontSize: "12px",
-            color: "#8a8aa8",
+            color: "#6b7280",
             lineHeight: 1.65,
           }}
         >

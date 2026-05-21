@@ -96,7 +96,7 @@ export default function CTA() {
               fontFamily: "var(--font-montserrat)",
               fontSize: "clamp(10.5px, 0.95vw, 14px)",
               fontWeight: 400,
-              color: "#5a6280",
+              color: "#6b7280",
               lineHeight: 1.75,
               marginBottom: "clamp(18px, 2vw, 32px)",
               maxWidth: "620px",

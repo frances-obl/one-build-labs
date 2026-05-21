@@ -61,7 +61,7 @@ export default function About() {
             </p>
 
             <h2
-              className="text-[clamp(2.8rem,5vw,4.2rem)] font-bold text-[#16162a] leading-[0.95] tracking-tight"
+              className="text-[clamp(2.8rem,5vw,4.2rem)] font-bold text-[#1a2040] leading-[0.95] tracking-tight"
               style={{ fontFamily: "var(--font-cormorant)" }}
             >
               Two builders,{" "}
@@ -69,7 +69,7 @@ export default function About() {
             </h2>
 
             <p
-              className="text-[14px] text-[#8a8aa8] leading-relaxed max-w-sm"
+              className="text-[14px] text-[#6b7280] leading-relaxed max-w-sm"
               style={{ fontFamily: "var(--font-montserrat)" }}
             >
               We&apos;re not an agency with layers of overhead. We&apos;re two people who genuinely love building websites and we&apos;re really good at it.
@@ -78,7 +78,7 @@ export default function About() {
             {/* Signature */}
             <div className="pt-4 border-t border-[#e0e0ea]">
               <p
-                className="text-3xl text-[#16162a] italic"
+                className="text-3xl text-[#1a2040] italic"
                 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300 }}
               >
                 Frances &amp; Jose
@@ -105,17 +105,17 @@ export default function About() {
                   className="flex items-start gap-6 py-8 first:pt-0 last:pb-0"
                 >
                   <div className="flex-shrink-0 w-10 h-10 rounded-full border border-[#e0e0ea] flex items-center justify-center bg-white">
-                    <Icon className="w-4 h-4 text-[#16162a]" aria-hidden="true" />
+                    <Icon className="w-4 h-4 text-[#1a2040]" aria-hidden="true" />
                   </div>
                   <div className="space-y-1.5">
                     <h3
-                      className="text-xl font-semibold text-[#16162a] tracking-tight"
+                      className="text-xl font-bold text-[#1a2040] tracking-tight"
                       style={{ fontFamily: "var(--font-cormorant)" }}
                     >
                       {f.title}
                     </h3>
                     <p
-                      className="text-[13px] text-[#8a8aa8] leading-relaxed"
+                      className="text-[13px] text-[#6b7280] leading-relaxed"
                       style={{ fontFamily: "var(--font-montserrat)" }}
                     >
                       {f.body}

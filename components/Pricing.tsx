@@ -87,7 +87,7 @@ export default function Pricing() {
             Pricing
           </p>
           <h2
-            className="text-[clamp(2.4rem,5vw,4rem)] font-bold text-[#16162a] leading-[0.95] tracking-tight"
+            className="text-[clamp(2.6rem,5vw,4rem)] font-bold text-[#1a2040] leading-[0.95] tracking-tight"
             style={{ fontFamily: "var(--font-cormorant)" }}
           >
             Simple, transparent pricing.
@@ -110,15 +110,15 @@ export default function Pricing() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: i * 0.1 }}
               className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
                 tier.featured
-                  ? "bg-white border-2 border-[#16162a] shadow-xl scale-[1.02]"
-                  : "bg-white border border-[#e0e0ea] hover:border-[#16162a]/40 hover:shadow-md"
+                  ? "bg-white border-2 border-[#1a2040] shadow-xl scale-[1.02]"
+                  : "bg-white border border-[#e0e0ea] hover:border-[#1a2040]/40 hover:shadow-md"
               }`}
             >
               {/* Featured badge */}
               {tier.badge && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span
-                    className="px-4 py-1.5 bg-[#16162a] text-white text-[9px] tracking-[0.2em] font-semibold uppercase rounded-full"
+                    className="px-4 py-1.5 bg-[#1a2040] text-white text-[9px] tracking-[0.2em] font-semibold uppercase rounded-full"
                     style={{ fontFamily: "var(--font-montserrat)" }}
                   >
                     {tier.badge}
@@ -136,7 +136,7 @@ export default function Pricing() {
 
                 <div className="flex items-end gap-2 mb-1">
                   <span
-                    className="text-5xl font-bold text-[#16162a] tracking-tight leading-none"
+                    className="text-5xl font-bold text-[#1a2040] tracking-tight leading-none"
                     style={{ fontFamily: "var(--font-cormorant)" }}
                   >
                     {tier.price}
@@ -174,9 +174,9 @@ export default function Pricing() {
               <ul className="space-y-3.5 flex-1 mb-8">
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-3">
-                    <Check className="w-4 h-4 text-[#16162a] flex-shrink-0 mt-0.5" aria-hidden="true" />
+                    <Check className="w-4 h-4 text-[#1a2040] flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <span
-                      className="text-[12px] text-[#555570] leading-relaxed"
+                      className="text-[12px] text-[#6b7280] leading-relaxed"
                       style={{ fontFamily: "var(--font-montserrat)" }}
                     >
                       {f}
@@ -187,10 +187,10 @@ export default function Pricing() {
 
               <button
                 onClick={() => open(tier.label)}
-                className={`w-full inline-flex items-center justify-center py-3.5 text-[10px] tracking-[0.18em] font-semibold uppercase transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#16162a]/30 ${
+                className={`w-full inline-flex items-center justify-center py-3.5 text-[10px] tracking-[0.18em] font-semibold uppercase transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1a2040]/30 ${
                   tier.featured
-                    ? "bg-[#16162a] text-white hover:bg-[#2a2a45]"
-                    : "border border-[#16162a]/25 text-[#16162a] hover:border-[#16162a] hover:bg-[#16162a] hover:text-white"
+                    ? "bg-[#1a2040] text-white hover:bg-[#2a2a45]"
+                    : "border border-[#1a2040]/25 text-[#1a2040] hover:border-[#1a2040] hover:bg-[#1a2040] hover:text-white"
                 }`}
                 style={{ fontFamily: "var(--font-montserrat)" }}
               >
