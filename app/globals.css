@@ -1,27 +1,13 @@
 @import "tailwindcss";
 
-/*
- * Lenis manages all scrolling — native scroll-behavior fights it.
- * html { scroll-behavior: smooth } is intentionally removed.
- */
-html {
-  /* Lenis needs overflow visible on html */
-  overflow: hidden;
-}
-
-/*
- * GPU compositing hints — promotes scroll container and key animated
- * elements to their own compositor layer, enabling 60fps scrolling.
- */
+/* Lenis handles scroll — no overflow restrictions needed */
 html,
 body {
   height: 100%;
 }
 
 body {
-  /* Lenis attaches its scroll listener here */
-  overflow-y: auto;
-  overscroll-behavior: none;       /* prevents browser pull-to-refresh jank */
+  overscroll-behavior: none;
   background: #f4f4f7;
   color: #1a2040;
   font-family: var(--font-montserrat), system-ui, sans-serif;
@@ -29,16 +15,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Anchor link offset for fixed navbar */
+/* Anchor offset for fixed navbar */
 section,
 footer {
   scroll-margin-top: 80px;
 }
 
-/* Animated sections — promote to GPU layer before animation fires */
-section,
-header {
-  will-change: auto;
+/* GPU compositing for smoother repaints */
+section {
   transform: translateZ(0);
 }
 
