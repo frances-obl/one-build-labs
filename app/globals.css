@@ -15,10 +15,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Anchor offset for fixed navbar */
+/* Each section is 100vh — scroll to top of section exactly */
 section,
 footer {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 0px;
 }
 
 /* GPU compositing for smoother repaints */

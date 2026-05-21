@@ -7,6 +7,7 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 export default function Hero() {
   return (
     <section
+      id="home"
       style={{
         position: "relative",
         height: "100vh",

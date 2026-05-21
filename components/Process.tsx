@@ -44,11 +44,13 @@ export default function Process() {
       ref={ref}
       style={{
         background: "#f4f4f7",
+        height: "100vh",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        padding: "clamp(60px, 8vw, 120px) clamp(24px, 5vw, 80px)",
+        overflow: "hidden",
+        padding: "clamp(40px, 5vw, 80px) clamp(24px, 5vw, 80px)",
       }}
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>

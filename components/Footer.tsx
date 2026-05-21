@@ -2,11 +2,11 @@
 import { useContactModal } from "@/context/ContactModalContext";
 
 const navigate = [
-  { label: "Work", href: "#projects" },
+  { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
   { label: "Process", href: "#process" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Support", href: "#contact" },
 ];
 
 const linkStyle: React.CSSProperties = {

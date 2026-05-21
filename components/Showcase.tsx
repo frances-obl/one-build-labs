@@ -102,6 +102,7 @@ export default function Showcase() {
       ref={sectionRef}
       className="bg-[#edeef4]"
       style={{
+        height: "100vh",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",

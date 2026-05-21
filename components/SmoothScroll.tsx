@@ -37,7 +37,7 @@ export default function SmoothScroll({
       const target = document.querySelector<HTMLElement>(id);
       if (!target) return;
       e.preventDefault();
-      lenis.scrollTo(target, { offset: -80, lerp: 0.1 });
+      lenis.scrollTo(target, { offset: 0, lerp: 0.1 });
     };
 
     document.addEventListener("click", handleClick);

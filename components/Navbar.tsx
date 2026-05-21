@@ -4,8 +4,9 @@ import { Menu, X } from "lucide-react";
 import { useContactModal } from "@/context/ContactModalContext";
 
 const navLinks = [
-  { label: "PROJECTS", href: "#projects" },
+  { label: "HOME", href: "#home" },
   { label: "ABOUT US", href: "#about" },
+  { label: "PROJECTS", href: "#projects" },
   { label: "PROCESS", href: "#process" },
   { label: "PRICING", href: "#pricing" },
 ];

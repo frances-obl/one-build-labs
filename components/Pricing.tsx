@@ -69,8 +69,8 @@ export default function Pricing() {
     <section
       id="pricing"
       ref={ref}
-      className="py-16 md:py-20 bg-[#ececf2]"
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
+      className="bg-[#ececf2]"
+      style={{ height: "100vh", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden" }}
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
