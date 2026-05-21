@@ -1,15 +1,48 @@
 @import "tailwindcss";
 
+/*
+ * Lenis manages all scrolling — native scroll-behavior fights it.
+ * html { scroll-behavior: smooth } is intentionally removed.
+ */
 html {
-  scroll-behavior: smooth;
+  /* Lenis needs overflow visible on html */
+  overflow: hidden;
 }
 
-/* Give Lenis snap targets accurate scroll-margin so nav links land correctly */
+/*
+ * GPU compositing hints — promotes scroll container and key animated
+ * elements to their own compositor layer, enabling 60fps scrolling.
+ */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  /* Lenis attaches its scroll listener here */
+  overflow-y: auto;
+  overscroll-behavior: none;       /* prevents browser pull-to-refresh jank */
+  background: #f4f4f7;
+  color: #1a2040;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Anchor link offset for fixed navbar */
 section,
 footer {
-  scroll-margin-top: 0;
+  scroll-margin-top: 80px;
 }
 
+/* Animated sections — promote to GPU layer before animation fires */
+section,
+header {
+  will-change: auto;
+  transform: translateZ(0);
+}
+
+/* Loading spinner */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -21,12 +54,4 @@ footer {
 .showcase-track {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-body {
-  background: #f4f4f7;
-  color: #16162a;
-  font-family: var(--font-montserrat), system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }

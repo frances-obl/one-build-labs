@@ -1,9 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import Lenis from "lenis";
-import Snap from "lenis/snap";
-
-const ease = (t: number): number => Math.min(1, 1.001 - Math.pow(2, -10 * t));
 
 export default function SmoothScroll({
   children,
@@ -11,33 +8,25 @@ export default function SmoothScroll({
   children: React.ReactNode;
 }) {
   useEffect(() => {
+    /*
+     * Lenis with lerp-based interpolation.
+     * lerp: 0.1  → silky 60fps inertia feel (Apple-style)
+     * No Snap plugin — mandatory snap kills the natural scroll momentum.
+     */
     const lenis = new Lenis({
-      duration: 1.4,
-      easing: ease,
-      touchMultiplier: 0.55,
+      lerp: 0.1,
       smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.8,
+      infinite: false,
+      autoRaf: false, // we drive the RAF ourselves for maximum control
     });
 
-    // Lenis built-in snap — mandatory panel-by-panel
-    const snap = new Snap(lenis, {
-      type: "mandatory",
-      duration: 1.2,
-      easing: ease,
-    });
+    // Expose lenis globally so other components can call lenis.scrollTo()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).lenis = lenis;
 
-    // Register every top-level section + footer as a snap target
-    const main = document.querySelector("main");
-    const footer = document.querySelector("footer");
-    const panels: HTMLElement[] = [
-      ...(main
-        ? Array.from(main.querySelectorAll<HTMLElement>(":scope > section"))
-        : []),
-      ...(footer ? [footer as HTMLElement] : []),
-    ];
-
-    const removers = panels.map((el) => snap.addElement(el));
-
-    // Smooth-scroll anchor links through Lenis (accounts for fixed navbar)
+    // Smooth-scroll anchor links (accounts for fixed navbar height)
     const handleClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>(
         "a[href^='#']"
@@ -48,11 +37,12 @@ export default function SmoothScroll({
       const target = document.querySelector<HTMLElement>(id);
       if (!target) return;
       e.preventDefault();
-      lenis.scrollTo(target, { offset: -80, duration: 1.4, easing: ease });
+      lenis.scrollTo(target, { offset: -80, lerp: 0.1 });
     };
 
     document.addEventListener("click", handleClick);
 
+    // Single RAF loop — drives Lenis at the display refresh rate
     let rafId: number;
     const raf = (time: number) => {
       lenis.raf(time);
@@ -63,8 +53,8 @@ export default function SmoothScroll({
     return () => {
       cancelAnimationFrame(rafId);
       document.removeEventListener("click", handleClick);
-      removers.forEach((remove) => remove());
-      snap.destroy();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).lenis;
       lenis.destroy();
     };
   }, []);
