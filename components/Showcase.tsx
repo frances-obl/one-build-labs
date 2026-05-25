@@ -85,7 +85,7 @@ function MacBookMockup({ currentIndex }: { currentIndex: number }) {
                 alt={projects[currentIndex].name}
                 fill
                 sizes="(max-width: 1280px) 45vw, 520px"
-                style={{ objectFit: "cover", objectPosition: "top center" }}
+                style={{ objectFit: "fill" }}
                 priority={currentIndex === 0}
               />
             </motion.div>
@@ -206,7 +206,7 @@ function PhoneMockup({
                 alt={`${projects[currentIndex].name} mobile`}
                 fill
                 sizes="200px"
-                style={{ objectFit: "cover", objectPosition: "top center" }}
+                style={{ objectFit: "cover", objectPosition: "top left" }}
               />
             </motion.div>
           </AnimatePresence>
@@ -266,12 +266,12 @@ export default function Showcase() {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (!inView || isPaused) return;
     const timer = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % projects.length);
-    }, 4500);
+    }, 3000);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [inView, isPaused]);
 
   return (
     <section
