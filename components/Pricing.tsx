@@ -196,6 +196,13 @@ export default function Pricing() {
               >
                 {tier.cta}
               </button>
+
+              <p
+                className="text-center text-[10px] text-[#9ca3af] mt-3"
+                style={{ fontFamily: "var(--font-montserrat)" }}
+              >
+                Recurring monthly payments. Cancel any time.
+              </p>
             </motion.div>
           ))}
         </div>
