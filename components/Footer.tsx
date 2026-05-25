@@ -1,5 +1,6 @@
 "use client";
 import { useContactModal } from "@/context/ContactModalContext";
+import { usePrivacyPolicy } from "@/context/PrivacyPolicyContext";
 
 const navigate = [
   { label: "Home", href: "#home" },
@@ -32,6 +33,7 @@ const headingStyle: React.CSSProperties = {
 export default function Footer() {
   const year = new Date().getFullYear();
   const { open } = useContactModal();
+  const { open: openPrivacy } = usePrivacyPolicy();
 
   return (
     <footer
@@ -178,20 +180,24 @@ export default function Footer() {
             >
               &copy; {year} One Build Labs. All rights reserved.
             </p>
-            <a
-              href="#"
+            <button
+              onClick={openPrivacy}
               style={{
                 fontFamily: "var(--font-montserrat)",
                 fontSize: "11px",
                 color: "#9ca3af",
                 textDecoration: "none",
                 transition: "color 0.2s",
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1a2040"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#9ca3af"; }}
             >
               Privacy Policy
-            </a>
+            </button>
           </div>
 
           <p

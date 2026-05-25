@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat, Dancing_Script } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import { ContactModalProvider } from "@/context/ContactModalContext";
+import { PrivacyPolicyProvider } from "@/context/PrivacyPolicyContext";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -44,7 +45,9 @@ export default function RootLayout({
     >
       <body className="min-h-screen">
         <SmoothScroll>
-          <ContactModalProvider>{children}</ContactModalProvider>
+          <ContactModalProvider>
+              <PrivacyPolicyProvider>{children}</PrivacyPolicyProvider>
+            </ContactModalProvider>
         </SmoothScroll>
       </body>
     </html>
