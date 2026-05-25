@@ -104,6 +104,18 @@ export default function PrivacyPolicyModal({ isOpen, onClose }: Props) {
             }}
           />
 
+          {/* Centering shell — flexbox so Framer Motion y-animation never conflicts with transform centering */}
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 201,
+              pointerEvents: "none",
+            }}
+          >
           {/* Panel */}
           <motion.div
             initial={{ opacity: 0, y: 32, scale: 0.97 }}
@@ -111,16 +123,12 @@ export default function PrivacyPolicyModal({ isOpen, onClose }: Props) {
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.45, ease }}
             style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
               width: "min(680px, 92vw)",
               maxHeight: "82vh",
               background: "#ffffff",
               borderRadius: "16px",
               boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08)",
-              zIndex: 201,
+              pointerEvents: "auto",
               display: "flex",
               flexDirection: "column",
               overflow: "hidden",
@@ -300,6 +308,7 @@ export default function PrivacyPolicyModal({ isOpen, onClose }: Props) {
               </div>
             </div>
           </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
