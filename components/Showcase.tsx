@@ -34,17 +34,26 @@ function ProjectCard({
   project,
   delay,
   inView,
+  mobile = false,
 }: {
   project: (typeof projects)[number];
   delay: number;
   inView: boolean;
+  mobile?: boolean;
 }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.65, ease, delay }}
-      className="snap-center shrink-0 w-[82vw] md:w-auto flex flex-col"
+      style={{
+        /* Mobile: exact viewport width card so nothing peeks */
+        width: mobile ? "80vw" : "100%",
+        flexShrink: mobile ? 0 : undefined,
+        display: "flex",
+        flexDirection: "column",
+        scrollSnapAlign: mobile ? "center" : undefined,
+      }}
     >
       {/* Screenshot frame */}
       <div
@@ -55,34 +64,36 @@ function ProjectCard({
           overflow: "hidden",
           border: "1.5px solid rgba(26, 32, 64, 0.12)",
           boxShadow:
-            "0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04)",
+            "0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
           position: "relative",
           background: "#fff",
+          flexShrink: 0,
         }}
       >
         <Image
           src={project.image}
           alt={project.name}
           fill
-          sizes="(max-width: 768px) 82vw, 33vw"
+          sizes={mobile ? "80vw" : "(max-width: 1024px) 33vw, 400px"}
           style={{ objectFit: "fill" }}
         />
       </div>
 
-      {/* Project info */}
-      <div style={{ marginTop: "16px" }}>
+      {/* Project info — always fully visible */}
+      <div style={{ marginTop: "14px", paddingBottom: "4px" }}>
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: "8px",
             marginBottom: "6px",
+            flexWrap: "wrap",
           }}
         >
           <h3
             style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(16px, 1.8vw, 22px)",
+              fontSize: mobile ? "18px" : "clamp(16px, 1.8vw, 22px)",
               fontWeight: 700,
               color: "#1a2040",
               lineHeight: 1.1,
@@ -131,20 +142,25 @@ export default function Showcase() {
       id="projects"
       ref={sectionRef}
       style={{
-        height: "100vh",
-        minHeight: "100vh",
+        /* min-height so content is never clipped; svh excludes mobile browser chrome */
+        minHeight: "100svh",
         display: "flex",
         flexDirection: "column",
-        overflow: "hidden",
         background: "#edeef4",
       }}
     >
-      {/* Header */}
+      {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.75, ease }}
-        className="shrink-0 text-center pt-10 md:pt-12 pb-4 md:pb-6 px-6"
+        style={{
+          flexShrink: 0,
+          textAlign: "center",
+          paddingTop: "clamp(32px, 5vw, 48px)",
+          paddingBottom: "clamp(16px, 2vw, 24px)",
+          paddingInline: "24px",
+        }}
       >
         <p
           style={{
@@ -154,7 +170,7 @@ export default function Showcase() {
             letterSpacing: "0.28em",
             color: "#8a8aa8",
             textTransform: "uppercase",
-            marginBottom: "12px",
+            marginBottom: "10px",
           }}
         >
           Selected Work
@@ -162,7 +178,7 @@ export default function Showcase() {
         <h2
           style={{
             fontFamily: "var(--font-cormorant)",
-            fontSize: "clamp(1.9rem, 4.2vw, 3.4rem)",
+            fontSize: "clamp(1.7rem, 4.2vw, 3.4rem)",
             fontWeight: 700,
             color: "#1a2040",
             lineHeight: 1,
@@ -184,12 +200,52 @@ export default function Showcase() {
         </p>
       </motion.div>
 
-      {/* Projects */}
-      <div className="flex-1 min-h-0 flex items-center">
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-10">
+      {/* ── Mobile: horizontal snap carousel (one card centered per stop) ── */}
+      <div
+        className="md:hidden"
+        style={{
+          flexShrink: 0,
+          display: "flex",
+          overflowX: "auto",
+          scrollSnapType: "x mandatory",
+          scrollbarWidth: "none",
+          /* 10vw padding on each side centers the 80vw card */
+          paddingInline: "10vw",
+          gap: "16px",
+          paddingBottom: "8px",
+        }}
+      >
+        {projects.map((project, i) => (
+          <ProjectCard
+            key={project.name}
+            project={project}
+            delay={i * 0.12}
+            inView={inView}
+            mobile
+          />
+        ))}
+      </div>
+
+      {/* ── Desktop: 3-col grid, all visible ── */}
+      <div
+        className="hidden md:flex flex-1 items-center"
+        style={{ minHeight: 0 }}
+      >
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "1280px",
+            margin: "0 auto",
+            paddingInline: "clamp(24px, 4vw, 40px)",
+          }}
+        >
           <div
-            className="flex snap-x snap-mandatory overflow-x-auto md:grid md:grid-cols-3 md:overflow-x-visible md:snap-none gap-6 md:gap-8 items-start"
-            style={{ scrollbarWidth: "none" }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "clamp(20px, 3vw, 32px)",
+              alignItems: "start",
+            }}
           >
             {projects.map((project, i) => (
               <ProjectCard
@@ -203,9 +259,14 @@ export default function Showcase() {
         </div>
       </div>
 
-      {/* CTA */}
+      {/* ── CTA ── */}
       <motion.div
-        className="shrink-0 text-center pb-8 md:pb-10"
+        style={{
+          flexShrink: 0,
+          textAlign: "center",
+          paddingTop: "clamp(20px, 3vw, 32px)",
+          paddingBottom: "clamp(28px, 4vw, 40px)",
+        }}
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 0.45 }}
