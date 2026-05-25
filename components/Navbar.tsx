@@ -70,30 +70,18 @@ export default function Navbar() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "10px",
             textDecoration: "none",
+            flexShrink: 0,
           }}
         >
           <Image
             src="/onebuildlabslogo.gif"
-            alt="One Build Labs logo"
-            width={40}
-            height={40}
-            style={{ objectFit: "contain" }}
+            alt="One Build Labs"
+            width={72}
+            height={52}
+            style={{ objectFit: "contain", objectPosition: "left center" }}
             priority
           />
-          <span
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "10px",
-              fontWeight: 700,
-              letterSpacing: "0.14em",
-              color: "#1a2040",
-              lineHeight: 1.2,
-            }}
-          >
-            ONE BUILD LABS
-          </span>
         </a>
 
         {/* Desktop nav links */}

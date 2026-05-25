@@ -53,12 +53,11 @@ export default function Hero() {
           <p
             style={{
               fontFamily: "var(--font-montserrat)",
-              fontSize: "10px",
-              fontWeight: 700,
-              color: "#8a8aa8",
-              letterSpacing: "0.28em",
-              textTransform: "uppercase" as const,
-              marginBottom: "18px",
+              fontSize: "13px",
+              fontWeight: 400,
+              color: "#4a5170",
+              letterSpacing: "0.04em",
+              marginBottom: "16px",
               lineHeight: 1,
             }}
           >
@@ -86,7 +85,7 @@ export default function Hero() {
               fontFamily: "var(--font-montserrat)",
               fontSize: "14px",
               fontWeight: 400,
-              color: "#6b7280",
+              color: "#4a5170",
               lineHeight: 1.75,
               maxWidth: "430px",
               marginBottom: "38px",
