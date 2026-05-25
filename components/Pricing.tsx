@@ -4,13 +4,16 @@ import { motion, useInView } from "framer-motion";
 import { Check } from "lucide-react";
 import { useContactModal } from "@/context/ContactModalContext";
 
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
 const tiers = [
   {
     label: "Starter Site",
     price: "$499",
     sub: "USD · one time",
-    badge: null,
-    savings: null,
+    badge: null as string | null,
+    savings: null as string | null,
+    originalPrice: undefined as string | undefined,
     featured: false,
     cta: "Get Started",
     features: [
@@ -27,8 +30,8 @@ const tiers = [
     price: "$649",
     originalPrice: "$1,299",
     sub: "USD · one time",
-    badge: "Most Popular",
-    savings: "Save $650 — Launch Special",
+    badge: "Most Popular" as string | null,
+    savings: "Save $650 — Launch Special" as string | null,
     featured: true,
     cta: "Get Started",
     features: [
@@ -44,8 +47,9 @@ const tiers = [
     label: "Custom Web",
     price: "Custom",
     sub: "Quote based on your needs",
-    badge: null,
-    savings: null,
+    badge: null as string | null,
+    savings: null as string | null,
+    originalPrice: undefined as string | undefined,
     featured: false,
     cta: "Contact Us",
     features: [
@@ -70,55 +74,82 @@ export default function Pricing() {
       id="pricing"
       ref={ref}
       className="bg-[#ececf2]"
-      style={{ height: "100vh", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden" }}
+      style={{
+        height: "100vh",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-          className="text-center mb-16 space-y-4"
+      {/* ── Header (shrinks so cards get max space) ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.75, ease }}
+        className="text-center shrink-0 pt-10 md:pt-16 pb-6 md:pb-10 px-6 space-y-2 md:space-y-4"
+      >
+        <p
+          className="text-[10px] tracking-[0.28em] text-[#8a8aa8] uppercase"
+          style={{ fontFamily: "var(--font-montserrat)" }}
         >
-          <p
-            className="text-[10px] tracking-[0.28em] text-[#8a8aa8] uppercase"
-            style={{ fontFamily: "var(--font-montserrat)" }}
-          >
-            Pricing
-          </p>
-          <h2
-            className="text-[clamp(2.6rem,5vw,4rem)] font-bold text-[#1a2040] leading-[0.95] tracking-tight"
-            style={{ fontFamily: "var(--font-cormorant)" }}
-          >
-            Simple, transparent pricing.
-          </h2>
-          <p
-            className="text-[13px] text-[#8a8aa8] max-w-lg mx-auto leading-relaxed"
-            style={{ fontFamily: "var(--font-montserrat)" }}
-          >
-            No hidden fees, no bloated packages. You get a professional website at a fair price, period.
-          </p>
-        </motion.div>
+          Pricing
+        </p>
+        <h2
+          className="text-[clamp(2rem,5vw,4rem)] font-bold text-[#1a2040] leading-[0.95] tracking-tight"
+          style={{ fontFamily: "var(--font-cormorant)" }}
+        >
+          Simple, transparent pricing.
+        </h2>
+        <p
+          className="text-[12px] md:text-[13px] text-[#8a8aa8] max-w-lg mx-auto leading-relaxed"
+          style={{ fontFamily: "var(--font-montserrat)" }}
+        >
+          No hidden fees, no bloated packages. You get a professional website at a fair price, period.
+        </p>
+      </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+      {/* ── Cards area — flex-1 so it fills remaining viewport ── */}
+      <div className="flex-1 min-h-0 flex items-stretch px-0 md:px-6 pb-6 md:pb-10">
+        {/*
+          Mobile:  horizontal snap-carousel (one card = one viewport)
+          Desktop: 3-column grid
+        */}
+        <div
+          className="
+            w-full
+            flex snap-x snap-mandatory overflow-x-auto
+            md:grid md:grid-cols-3 md:overflow-x-visible md:snap-none
+            gap-4 md:gap-6
+            px-5 md:px-0
+            md:max-w-7xl md:mx-auto
+            items-stretch
+          "
+          style={{ scrollbarWidth: "none" }}
+        >
           {tiers.map((tier, i) => (
             <motion.div
               key={tier.label}
               initial={{ opacity: 0, y: 32 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: i * 0.1 }}
-              className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
-                tier.featured
-                  ? "bg-white border-2 border-[#1a2040] shadow-xl scale-[1.02]"
+              transition={{ duration: 0.7, ease, delay: i * 0.1 }}
+              className={`
+                snap-center shrink-0
+                w-[82vw] md:w-auto
+                relative rounded-2xl p-6 md:p-8
+                flex flex-col
+                transition-all duration-300
+                ${tier.featured
+                  ? "bg-white border-2 border-[#1a2040] shadow-xl md:scale-[1.02]"
                   : "bg-white border border-[#e0e0ea] hover:border-[#1a2040]/40 hover:shadow-md"
-              }`}
+                }
+              `}
             >
-              {/* Featured badge */}
+              {/* Most Popular badge */}
               {tier.badge && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span
-                    className="px-4 py-1.5 bg-[#1a2040] text-white text-[9px] tracking-[0.2em] font-semibold uppercase rounded-full"
+                    className="px-4 py-1.5 bg-[#1a2040] text-white text-[9px] tracking-[0.2em] font-semibold uppercase rounded-full whitespace-nowrap"
                     style={{ fontFamily: "var(--font-montserrat)" }}
                   >
                     {tier.badge}
@@ -126,9 +157,10 @@ export default function Pricing() {
                 </div>
               )}
 
-              <div className="mb-7">
+              {/* Price block */}
+              <div className="mb-5 md:mb-7">
                 <p
-                  className="text-[9px] tracking-[0.22em] text-[#8a8aa8] uppercase mb-4"
+                  className="text-[9px] tracking-[0.22em] text-[#8a8aa8] uppercase mb-3 md:mb-4"
                   style={{ fontFamily: "var(--font-montserrat)" }}
                 >
                   {tier.label}
@@ -136,14 +168,14 @@ export default function Pricing() {
 
                 <div className="flex items-end gap-2 mb-1">
                   <span
-                    className="text-5xl font-bold text-[#1a2040] tracking-tight leading-none"
+                    className="text-4xl md:text-5xl font-bold text-[#1a2040] tracking-tight leading-none"
                     style={{ fontFamily: "var(--font-cormorant)" }}
                   >
                     {tier.price}
                   </span>
                   {tier.originalPrice && (
                     <span
-                      className="text-xl text-[#8a8aa8] line-through mb-1"
+                      className="text-lg md:text-xl text-[#8a8aa8] line-through mb-1"
                       style={{ fontFamily: "var(--font-cormorant)" }}
                     >
                       {tier.originalPrice}
@@ -159,7 +191,7 @@ export default function Pricing() {
                 </p>
 
                 {tier.savings && (
-                  <div className="mt-3 inline-flex items-center px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
+                  <div className="mt-2 md:mt-3 inline-flex items-center px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
                     <span
                       className="text-[10px] text-emerald-700 font-medium"
                       style={{ fontFamily: "var(--font-montserrat)" }}
@@ -171,7 +203,7 @@ export default function Pricing() {
               </div>
 
               {/* Feature list */}
-              <ul className="space-y-3.5 flex-1 mb-8">
+              <ul className="space-y-2.5 md:space-y-3.5 flex-1 mb-6 md:mb-8">
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-3">
                     <Check className="w-4 h-4 text-[#1a2040] flex-shrink-0 mt-0.5" aria-hidden="true" />
@@ -185,6 +217,7 @@ export default function Pricing() {
                 ))}
               </ul>
 
+              {/* CTA */}
               <button
                 onClick={() => open(tier.label)}
                 className={`w-full inline-flex items-center justify-center py-3.5 text-[10px] tracking-[0.18em] font-semibold uppercase transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1a2040]/30 ${

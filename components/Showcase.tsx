@@ -85,7 +85,7 @@ export default function Showcase() {
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.75, ease }}
-        style={{ textAlign: "center", marginBottom: "52px", padding: "0 40px" }}
+        style={{ textAlign: "center", marginBottom: "clamp(20px, 3.5vh, 52px)", padding: "0 clamp(16px, 4vw, 40px)" }}
       >
         <p
           style={{
@@ -136,6 +136,7 @@ export default function Showcase() {
         <button
           onClick={() => scroll("left")}
           aria-label="Scroll left"
+          className="hidden md:flex"
           style={{
             position: "absolute",
             left: "clamp(8px, 1.5vw, 24px)",
@@ -172,6 +173,7 @@ export default function Showcase() {
         <button
           onClick={() => scroll("right")}
           aria-label="Scroll right"
+          className="hidden md:flex"
           style={{
             position: "absolute",
             right: "clamp(8px, 1.5vw, 24px)",
@@ -211,7 +213,7 @@ export default function Showcase() {
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
           onMouseLeave={onMouseUp}
-          className="showcase-track"
+          className="showcase-track snap-x snap-mandatory"
           style={{
             display: "flex",
             gap: "28px",
@@ -229,7 +231,8 @@ export default function Showcase() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, ease, delay: 0.1 + i * 0.08 }}
-              style={{ flexShrink: 0, width: "clamp(300px, 32vw, 460px)" }}
+              className="snap-center shrink-0 w-[82vw] md:w-[clamp(300px,32vw,460px)]"
+              style={{}}
             >
               <ProjectCard project={project} />
             </motion.div>
@@ -242,7 +245,7 @@ export default function Showcase() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 0.45 }}
-        style={{ marginTop: "44px" }}
+        style={{ marginTop: "clamp(16px, 3vh, 44px)" }}
       >
         <button
           onClick={() => open()}
