@@ -65,7 +65,7 @@ function ProjectCard({
           alt={project.name}
           fill
           sizes="(max-width: 768px) 82vw, 33vw"
-          style={{ objectFit: "cover", objectPosition: "top" }}
+          style={{ objectFit: "fill" }}
         />
       </div>
 
