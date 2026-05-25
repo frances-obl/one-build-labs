@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import { useContactModal } from "@/context/ContactModalContext";
 
 const navLinks = [
@@ -73,54 +74,14 @@ export default function Navbar() {
             textDecoration: "none",
           }}
         >
-          <svg
-            width="36"
-            height="34"
-            viewBox="0 0 200 185"
-            fill="none"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="nb-body" x1="100" y1="58" x2="100" y2="172" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#82bff0" />
-                <stop offset="100%" stopColor="#132d7a" />
-              </linearGradient>
-              <linearGradient id="nb-wing" x1="0" y1="90" x2="200" y2="90" gradientUnits="userSpaceOnUse">
-                <stop offset="0%"   stopColor="#132d7a" />
-                <stop offset="35%"  stopColor="#4a88cc" />
-                <stop offset="65%"  stopColor="#4a88cc" />
-                <stop offset="100%" stopColor="#132d7a" />
-              </linearGradient>
-              <linearGradient id="nb-star" x1="100" y1="48" x2="100" y2="122" gradientUnits="userSpaceOnUse">
-                <stop offset="0%"   stopColor="#c8e4f8" />
-                <stop offset="50%"  stopColor="#70b2e8" />
-                <stop offset="100%" stopColor="#3a6ec0" />
-              </linearGradient>
-            </defs>
-            <polygon
-              points="100,6 192,90 100,174 8,90"
-              fill="rgba(180,210,235,0.18)"
-              stroke="#bdd4e8"
-              strokeWidth="1.4"
-            />
-            <polygon
-              points="8,90 50,60 63,72 34,90 63,108 50,120"
-              fill="url(#nb-wing)"
-            />
-            <polygon
-              points="192,90 150,60 137,72 166,90 137,108 150,120"
-              fill="url(#nb-wing)"
-            />
-            <polygon
-              points="100,58 137,72 166,90 137,108 100,172 63,108 34,90 63,72"
-              fill="url(#nb-body)"
-            />
-            <path
-              d="M100,48 L104,74 L118,90 L104,106 L100,132 L96,106 L82,90 L96,74 Z"
-              fill="url(#nb-star)"
-            />
-          </svg>
+          <Image
+            src="/onebuildlabslogo.gif"
+            alt="One Build Labs logo"
+            width={40}
+            height={40}
+            style={{ objectFit: "contain" }}
+            priority
+          />
           <span
             style={{
               fontFamily: "var(--font-montserrat)",
