@@ -44,9 +44,9 @@ function ProjectCard({
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.65, ease, delay }}
-      /* Mobile: compact thumbnail — ~2.2 visible at once so it reads as a carousel, not a blown-up site.
+      /* Mobile: 72vw — one card centered per snap stop (single viewing point), glimpse of adjacent cards.
          Desktop: fills its grid column. */
-      className="snap-center snap-always shrink-0 w-[42vw] md:w-auto flex flex-col"
+      className="snap-center snap-always shrink-0 w-[72vw] md:w-auto flex flex-col"
     >
       {/* Screenshot frame */}
       <div
@@ -67,7 +67,7 @@ function ProjectCard({
           src={project.image}
           alt={project.name}
           fill
-          sizes="(max-width: 768px) 42vw, 33vw"
+          sizes="(max-width: 768px) 72vw, 33vw"
           style={{ objectFit: "fill" }}
         />
       </div>
@@ -86,7 +86,7 @@ function ProjectCard({
           <h3
             style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(13px, 1.8vw, 22px)",
+              fontSize: "clamp(15px, 1.8vw, 22px)",
               fontWeight: 700,
               color: "#1a2040",
               lineHeight: 1.1,
@@ -97,7 +97,7 @@ function ProjectCard({
           <span
             style={{
               fontFamily: "var(--font-montserrat)",
-              fontSize: "7px",
+              fontSize: "8px",
               fontWeight: 600,
               letterSpacing: "0.08em",
               color: "#8a8aa8",
@@ -113,9 +113,9 @@ function ProjectCard({
         <p
           style={{
             fontFamily: "var(--font-montserrat)",
-            fontSize: "10px",
+            fontSize: "11px",
             color: "#6b7280",
-            lineHeight: 1.6,
+            lineHeight: 1.65,
           }}
         >
           {project.description}
@@ -201,14 +201,14 @@ export default function Showcase() {
           minHeight: 0,
         }}
       >
-        {/* Mobile carousel: 42vw cards show ~2 at a time — clearly thumbnails, not blown-up sites */}
+        {/* Mobile carousel: 72vw cards, one centered per snap stop — single viewing point */}
         <div
           className="md:hidden w-full flex snap-x snap-mandatory overflow-x-auto"
           style={{
             scrollbarWidth: "none",
-            /* 8vw padding centers the group of visible cards */
-            paddingInline: "8vw",
-            gap: "14px",
+            /* (100vw - 72vw) / 2 = 14vw each side centers each snapped card */
+            paddingInline: "14vw",
+            gap: "16px",
             paddingBottom: "4px",
           }}
         >
