@@ -1,6 +1,6 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { useContactModal } from "@/context/ContactModalContext";
 
@@ -15,243 +15,243 @@ const projects = [
     image: "/showcase-posh-nail-full.jpg",
   },
   {
-    name: "Brake World",
-    tag: "Business Website",
-    description:
-      "A trust-first auto repair site built for a family-owned shop with over 30 years of service. Clean, credible, and conversion-ready.",
-    image: "/showcase-brake-world-full.jpg",
-  },
-  {
     name: "Brow Envy",
     tag: "Beauty Studio",
     description:
       "A clean, modern beauty studio site built around brow and lash services, with a warm visual identity and seamless booking flow.",
     image: "/showcase-brow-envy-full.jpg",
   },
+  {
+    name: "Brake World",
+    tag: "Business Website",
+    description:
+      "A trust-first auto repair site built for a family-owned shop with over 30 years of service. Clean, credible, and conversion-ready.",
+    image: "/showcase-brake-world-full.jpg",
+  },
 ];
 
 /* ─────────────────────────────────────────────────────────────
-   MacBook mockup
+   Single project card: laptop mockup + overlapping phone
 ───────────────────────────────────────────────────────────── */
-function MacBookMockup({ currentIndex }: { currentIndex: number }) {
-  return (
-    <div style={{ position: "relative" }}>
-      {/* Lid */}
-      <div
-        style={{
-          width: "clamp(340px, 40vw, 520px)",
-          background: "linear-gradient(160deg, #2e2e30 0%, #1c1c1e 100%)",
-          borderRadius: "10px 10px 0 0",
-          padding: "12px 12px 8px",
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderBottom: "none",
-          boxShadow:
-            "inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 8px rgba(0,0,0,0.5)",
-        }}
-      >
-        {/* Camera dot */}
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "7px" }}>
-          <div
-            style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              background: "#3a3a3c",
-            }}
-          />
-        </div>
-
-        {/* Screen — 16:10 */}
-        <div
-          style={{
-            aspectRatio: "16/10",
-            overflow: "hidden",
-            borderRadius: "3px",
-            background: "#000",
-            position: "relative",
-          }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`mac-${currentIndex}`}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.92, ease }}
-              style={{ position: "absolute", inset: 0 }}
-            >
-              <Image
-                src={projects[currentIndex].image}
-                alt={projects[currentIndex].name}
-                fill
-                sizes="(max-width: 1280px) 45vw, 520px"
-                style={{ objectFit: "fill" }}
-                priority={currentIndex === 0}
-              />
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Screen glare */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%)",
-              pointerEvents: "none",
-              zIndex: 2,
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Base / keyboard strip */}
-      <div
-        style={{
-          width: "104%",
-          marginLeft: "-2%",
-          height: "18px",
-          background: "linear-gradient(to bottom, #3c3c3e 0%, #2c2c2e 100%)",
-          borderRadius: "0 0 6px 6px",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "52px",
-            height: "8px",
-            background: "rgba(0,0,0,0.2)",
-            borderRadius: "2px",
-          }}
-        />
-      </div>
-
-      {/* Floor shadow */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-28px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "88%",
-          height: "36px",
-          background: "rgba(0,0,0,0.12)",
-          filter: "blur(22px)",
-          borderRadius: "50%",
-        }}
-      />
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Phone mockup
-───────────────────────────────────────────────────────────── */
-function PhoneMockup({
-  currentIndex,
-  widthStyle,
+function ProjectCard({
+  project,
+  delay,
+  inView,
 }: {
-  currentIndex: number;
-  widthStyle: string;
+  project: (typeof projects)[number];
+  delay: number;
+  inView: boolean;
 }) {
   return (
-    <div style={{ position: "relative" }}>
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, ease, delay }}
+      /* Mobile: snap card, full-width. Desktop: auto fills grid column */
+      className="snap-center shrink-0 w-[82vw] md:w-auto flex flex-col"
+    >
+      {/* Device group — relative so phone can overlap */}
       <div
         style={{
-          width: widthStyle,
-          background: "linear-gradient(160deg, #2e2e30 0%, #1c1c1e 100%)",
-          borderRadius: "26px",
-          padding: "9px 7px",
-          boxShadow:
-            "0 28px 70px rgba(0,0,0,0.45), 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          position: "relative",
+          /* Right + bottom padding give the phone room to sit outside the laptop */
+          paddingRight: "clamp(52px, 7vw, 80px)",
+          paddingBottom: "clamp(38px, 4.5vw, 56px)",
         }}
       >
-        {/* Dynamic Island */}
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "5px" }}>
+        {/* ── Laptop ── */}
+        <div style={{ position: "relative" }}>
+          {/* Lid */}
           <div
             style={{
-              width: "44%",
-              height: "16px",
-              background: "#000",
-              borderRadius: "10px",
+              width: "100%",
+              background: "linear-gradient(160deg, #2e2e30 0%, #1c1c1e 100%)",
+              borderRadius: "10px 10px 0 0",
+              padding: "10px 10px 7px",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderBottom: "none",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
             }}
-          />
-        </div>
-
-        {/* Screen — 9:19.5 */}
-        <div
-          style={{
-            aspectRatio: "9/19.5",
-            overflow: "hidden",
-            borderRadius: "18px",
-            background: "#000",
-            position: "relative",
-          }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`phone-${currentIndex}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.92, ease, delay: 0.08 }}
-              style={{ position: "absolute", inset: 0 }}
+          >
+            {/* Camera */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "6px" }}>
+              <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#3a3a3c" }} />
+            </div>
+            {/* Screen — 16:10 */}
+            <div
+              style={{
+                aspectRatio: "16/10",
+                overflow: "hidden",
+                borderRadius: "3px",
+                background: "#000",
+                position: "relative",
+              }}
             >
               <Image
-                src={projects[currentIndex].image}
-                alt={`${projects[currentIndex].name} mobile`}
+                src={project.image}
+                alt={project.name}
                 fill
-                sizes="200px"
-                style={{ objectFit: "cover", objectPosition: "top left" }}
+                sizes="(max-width: 768px) 82vw, 33vw"
+                style={{ objectFit: "fill" }}
               />
-            </motion.div>
-          </AnimatePresence>
+              {/* Glare */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 40%)",
+                  pointerEvents: "none",
+                  zIndex: 2,
+                }}
+              />
+            </div>
+          </div>
 
-          {/* Screen glare */}
+          {/* Base */}
+          <div
+            style={{
+              width: "104%",
+              marginLeft: "-2%",
+              height: "14px",
+              background: "linear-gradient(to bottom, #3c3c3e 0%, #2a2a2c 100%)",
+              borderRadius: "0 0 5px 5px",
+              borderTop: "1px solid rgba(255,255,255,0.05)",
+            }}
+          />
+
+          {/* Floor shadow */}
           <div
             style={{
               position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 38%)",
-              pointerEvents: "none",
-              zIndex: 2,
+              bottom: "-20px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "90%",
+              height: "28px",
+              background: "rgba(0,0,0,0.10)",
+              filter: "blur(18px)",
+              borderRadius: "50%",
             }}
           />
         </div>
 
-        {/* Home indicator */}
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}>
+        {/* ── Phone — absolute, overlaps bottom-right of laptop ── */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            zIndex: 2,
+          }}
+        >
           <div
             style={{
-              width: "36%",
-              height: "3px",
-              background: "rgba(255,255,255,0.18)",
-              borderRadius: "2px",
+              width: "clamp(68px, 8vw, 96px)",
+              background: "linear-gradient(160deg, #2e2e30 0%, #1c1c1e 100%)",
+              borderRadius: "22px",
+              padding: "8px 6px",
+              border: "1px solid rgba(255,255,255,0.07)",
+              boxShadow:
+                "0 20px 56px rgba(0,0,0,0.42), 0 6px 18px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.07)",
+            }}
+          >
+            {/* Dynamic Island */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "4px" }}>
+              <div style={{ width: "44%", height: "13px", background: "#000", borderRadius: "8px" }} />
+            </div>
+            {/* Screen */}
+            <div
+              style={{
+                aspectRatio: "9/19.5",
+                overflow: "hidden",
+                borderRadius: "14px",
+                background: "#000",
+                position: "relative",
+              }}
+            >
+              <Image
+                src={project.image}
+                alt={`${project.name} mobile`}
+                fill
+                sizes="96px"
+                style={{ objectFit: "cover", objectPosition: "top left" }}
+              />
+              {/* Glare */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 36%)",
+                  pointerEvents: "none",
+                  zIndex: 2,
+                }}
+              />
+            </div>
+            {/* Home indicator */}
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "4px" }}>
+              <div style={{ width: "36%", height: "3px", background: "rgba(255,255,255,0.18)", borderRadius: "2px" }} />
+            </div>
+          </div>
+
+          {/* Phone shadow */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "-14px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "75%",
+              height: "20px",
+              background: "rgba(0,0,0,0.16)",
+              filter: "blur(12px)",
+              borderRadius: "50%",
             }}
           />
         </div>
       </div>
 
-      {/* Floor shadow */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-18px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "80%",
-          height: "26px",
-          background: "rgba(0,0,0,0.18)",
-          filter: "blur(16px)",
-          borderRadius: "50%",
-        }}
-      />
-    </div>
+      {/* Project info */}
+      <div style={{ marginTop: "20px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+          <h3
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(16px, 1.8vw, 22px)",
+              fontWeight: 700,
+              color: "#1a2040",
+              lineHeight: 1.1,
+            }}
+          >
+            {project.name}
+          </h3>
+          <span
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "8px",
+              fontWeight: 600,
+              letterSpacing: "0.08em",
+              color: "#8a8aa8",
+              background: "rgba(26,32,64,0.07)",
+              padding: "3px 8px",
+              borderRadius: "9999px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {project.tag}
+          </span>
+        </div>
+        <p
+          style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "11.5px",
+            color: "#6b7280",
+            lineHeight: 1.65,
+          }}
+        >
+          {project.description}
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -262,16 +262,6 @@ export default function Showcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, { once: true, margin: "-60px" });
   const { open } = useContactModal();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    if (!inView || isPaused) return;
-    const timer = setInterval(() => {
-      setCurrentIndex((i) => (i + 1) % projects.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, [inView, isPaused]);
 
   return (
     <section
@@ -283,8 +273,7 @@ export default function Showcase() {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        background:
-          "radial-gradient(ellipse 80% 60% at 50% 38%, #ffffff 0%, #f2efeb 55%, #e8e3dc 100%)",
+        background: "#edeef4",
       }}
     >
       {/* ── Header ── */}
@@ -292,7 +281,7 @@ export default function Showcase() {
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.75, ease }}
-        className="shrink-0 text-center pt-10 md:pt-14 pb-3 md:pb-5 px-6"
+        className="shrink-0 text-center pt-10 md:pt-12 pb-4 md:pb-6 px-6"
       >
         <p
           style={{
@@ -332,165 +321,26 @@ export default function Showcase() {
         </p>
       </motion.div>
 
-      {/* ── Device Stage ── */}
-      <motion.div
-        className="flex-1 min-h-0 flex items-center justify-center"
-        style={{ position: "relative" }}
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        {/* Studio spotlight glow behind devices */}
-        <div
-          style={{
-            position: "absolute",
-            width: "60%",
-            height: "70%",
-            background:
-              "radial-gradient(circle, rgba(255,255,255,0.75) 0%, transparent 70%)",
-            top: "5%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            filter: "blur(48px)",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* Desktop: MacBook + iPhone floating together */}
-        <motion.div
-          className="hidden md:flex items-end"
-          animate={{
-            y: [0, -10, -4, -10, 0],
-            rotate: [0, 0.2, 0, -0.2, 0],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <MacBookMockup currentIndex={currentIndex} />
+      {/* ── Projects ── */}
+      <div className="flex-1 min-h-0 flex items-center">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-10">
+          {/*
+            Mobile:  horizontal snap carousel (one card per viewport)
+            Desktop: 3-column grid, all visible at once
+          */}
           <div
-            style={{
-              marginLeft: "-30px",
-              marginBottom: "24px",
-              zIndex: 2,
-              position: "relative",
-            }}
+            className="flex snap-x snap-mandatory overflow-x-auto md:grid md:grid-cols-3 md:overflow-x-visible md:snap-none gap-6 md:gap-8 items-start"
+            style={{ scrollbarWidth: "none" }}
           >
-            <PhoneMockup
-              currentIndex={currentIndex}
-              widthStyle="clamp(88px, 9vw, 116px)"
-            />
+            {projects.map((project, i) => (
+              <ProjectCard
+                key={project.name}
+                project={project}
+                delay={i * 0.12}
+                inView={inView}
+              />
+            ))}
           </div>
-        </motion.div>
-
-        {/* Mobile: iPhone only, centered, larger */}
-        <motion.div
-          className="flex md:hidden"
-          animate={{ y: [0, -10, -4, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <PhoneMockup
-            currentIndex={currentIndex}
-            widthStyle="clamp(140px, 40vw, 200px)"
-          />
-        </motion.div>
-      </motion.div>
-
-      {/* ── Project Info ── */}
-      <div className="shrink-0 text-center px-6 pb-3 md:pb-4">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`info-${currentIndex}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.45, ease }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                marginBottom: "5px",
-              }}
-            >
-              <h3
-                style={{
-                  fontFamily: "var(--font-cormorant)",
-                  fontSize: "clamp(17px, 2vw, 24px)",
-                  fontWeight: 700,
-                  color: "#1a2040",
-                  lineHeight: 1.1,
-                }}
-              >
-                {projects[currentIndex].name}
-              </h3>
-              <span
-                style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "8px",
-                  fontWeight: 600,
-                  letterSpacing: "0.08em",
-                  color: "#8a8aa8",
-                  background: "rgba(26,32,64,0.07)",
-                  padding: "3px 8px",
-                  borderRadius: "9999px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {projects[currentIndex].tag}
-              </span>
-            </div>
-            <p
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "11.5px",
-                color: "#6b7280",
-                lineHeight: 1.6,
-                maxWidth: "400px",
-                margin: "0 auto",
-              }}
-            >
-              {projects[currentIndex].description}
-            </p>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Progress dots */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "8px",
-            marginTop: "14px",
-          }}
-        >
-          {projects.map((p, i) => (
-            <button
-              key={p.name}
-              onClick={() => {
-                setCurrentIndex(i);
-                setIsPaused(true);
-                setTimeout(() => setIsPaused(false), 6000);
-              }}
-              aria-label={`View ${p.name}`}
-              style={{
-                width: i === currentIndex ? "22px" : "6px",
-                height: "6px",
-                borderRadius: "3px",
-                background: i === currentIndex ? "#1a2040" : "#c4c4d4",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
-              }}
-            />
-          ))}
         </div>
       </div>
 
@@ -499,7 +349,7 @@ export default function Showcase() {
         className="shrink-0 text-center pb-8 md:pb-10"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay: 0.5 }}
+        transition={{ duration: 0.6, delay: 0.45 }}
       >
         <button
           onClick={() => open()}
