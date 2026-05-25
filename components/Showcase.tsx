@@ -34,37 +34,30 @@ function ProjectCard({
   project,
   delay,
   inView,
-  mobile = false,
 }: {
   project: (typeof projects)[number];
   delay: number;
   inView: boolean;
-  mobile?: boolean;
 }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.65, ease, delay }}
-      style={{
-        /* Mobile: exact viewport width card so nothing peeks */
-        width: mobile ? "80vw" : "100%",
-        flexShrink: mobile ? 0 : undefined,
-        display: "flex",
-        flexDirection: "column",
-        scrollSnapAlign: mobile ? "center" : undefined,
-      }}
+      /* Mobile: compact thumbnail — ~2.2 visible at once so it reads as a carousel, not a blown-up site.
+         Desktop: fills its grid column. */
+      className="snap-center snap-always shrink-0 w-[42vw] md:w-auto flex flex-col"
     >
       {/* Screenshot frame */}
       <div
         style={{
           width: "100%",
           aspectRatio: "16/10",
-          borderRadius: "8px",
+          borderRadius: "6px",
           overflow: "hidden",
           border: "1.5px solid rgba(26, 32, 64, 0.12)",
           boxShadow:
-            "0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
+            "0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)",
           position: "relative",
           background: "#fff",
           flexShrink: 0,
@@ -74,26 +67,26 @@ function ProjectCard({
           src={project.image}
           alt={project.name}
           fill
-          sizes={mobile ? "80vw" : "(max-width: 1024px) 33vw, 400px"}
+          sizes="(max-width: 768px) 42vw, 33vw"
           style={{ objectFit: "fill" }}
         />
       </div>
 
-      {/* Project info — always fully visible */}
-      <div style={{ marginTop: "14px", paddingBottom: "4px" }}>
+      {/* Project info */}
+      <div style={{ marginTop: "10px" }}>
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "8px",
-            marginBottom: "6px",
+            gap: "6px",
+            marginBottom: "4px",
             flexWrap: "wrap",
           }}
         >
           <h3
             style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: mobile ? "18px" : "clamp(16px, 1.8vw, 22px)",
+              fontSize: "clamp(13px, 1.8vw, 22px)",
               fontWeight: 700,
               color: "#1a2040",
               lineHeight: 1.1,
@@ -104,12 +97,12 @@ function ProjectCard({
           <span
             style={{
               fontFamily: "var(--font-montserrat)",
-              fontSize: "8px",
+              fontSize: "7px",
               fontWeight: 600,
               letterSpacing: "0.08em",
               color: "#8a8aa8",
               background: "rgba(26,32,64,0.07)",
-              padding: "3px 8px",
+              padding: "2px 6px",
               borderRadius: "9999px",
               whiteSpace: "nowrap",
             }}
@@ -120,9 +113,9 @@ function ProjectCard({
         <p
           style={{
             fontFamily: "var(--font-montserrat)",
-            fontSize: "11.5px",
+            fontSize: "10px",
             color: "#6b7280",
-            lineHeight: 1.65,
+            lineHeight: 1.6,
           }}
         >
           {project.description}
@@ -142,7 +135,6 @@ export default function Showcase() {
       id="projects"
       ref={sectionRef}
       style={{
-        /* min-height so content is never clipped; svh excludes mobile browser chrome */
         minHeight: "100svh",
         display: "flex",
         flexDirection: "column",
@@ -200,40 +192,40 @@ export default function Showcase() {
         </p>
       </motion.div>
 
-      {/* ── Mobile: horizontal snap carousel (one card centered per stop) ── */}
+      {/* ── Cards — shared snap carousel on mobile, 3-col grid on desktop ── */}
       <div
-        className="md:hidden"
         style={{
-          flexShrink: 0,
+          flex: 1,
           display: "flex",
-          overflowX: "auto",
-          scrollSnapType: "x mandatory",
-          scrollbarWidth: "none",
-          /* 10vw padding on each side centers the 80vw card */
-          paddingInline: "10vw",
-          gap: "16px",
-          paddingBottom: "8px",
+          alignItems: "center",
+          minHeight: 0,
         }}
       >
-        {projects.map((project, i) => (
-          <ProjectCard
-            key={project.name}
-            project={project}
-            delay={i * 0.12}
-            inView={inView}
-            mobile
-          />
-        ))}
-      </div>
-
-      {/* ── Desktop: 3-col grid, all visible ── */}
-      <div
-        className="hidden md:flex flex-1 items-center"
-        style={{ minHeight: 0 }}
-      >
+        {/* Mobile carousel: 42vw cards show ~2 at a time — clearly thumbnails, not blown-up sites */}
         <div
+          className="md:hidden w-full flex snap-x snap-mandatory overflow-x-auto"
           style={{
-            width: "100%",
+            scrollbarWidth: "none",
+            /* 8vw padding centers the group of visible cards */
+            paddingInline: "8vw",
+            gap: "14px",
+            paddingBottom: "4px",
+          }}
+        >
+          {projects.map((project, i) => (
+            <ProjectCard
+              key={project.name}
+              project={project}
+              delay={i * 0.12}
+              inView={inView}
+            />
+          ))}
+        </div>
+
+        {/* Desktop grid */}
+        <div
+          className="hidden md:block w-full"
+          style={{
             maxWidth: "1280px",
             margin: "0 auto",
             paddingInline: "clamp(24px, 4vw, 40px)",
