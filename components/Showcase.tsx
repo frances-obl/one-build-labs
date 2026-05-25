@@ -12,21 +12,21 @@ const projects = [
     tag: "Luxury Salon",
     description:
       "A high-end nail salon experience built to attract premium clientele and drive bookings with an elegant, editorial design.",
-    image: "/showcase-posh-nail.webp",
+    image: "/showcase-posh-nail-full.jpg",
   },
   {
     name: "Brake World",
     tag: "Business Website",
     description:
       "A trust-first auto repair site built for a family-owned shop with over 30 years of service. Clean, credible, and conversion-ready.",
-    image: "/showcase-brake-world.jpeg",
+    image: "/showcase-brake-world-full.jpg",
   },
   {
     name: "Brow Envy",
     tag: "Beauty Studio",
     description:
       "A clean, modern beauty studio site built around brow and lash services, with a warm visual identity and seamless booking flow.",
-    image: "/showcase-brow-envy.png",
+    image: "/showcase-brow-envy-full.jpg",
   },
 ];
 
